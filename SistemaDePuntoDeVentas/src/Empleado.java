@@ -2,6 +2,8 @@
 public class Empleado extends Persona{
 
 		private float sueldo;
+		private int codigo;
+		private String cargo;
 		private float impuestos;
 		private float seguro;
 		private float AFP;
@@ -11,6 +13,8 @@ public class Empleado extends Persona{
 			impuestos = 0;
 			seguro = 0;
 			AFP = 0;
+			cargo = null;
+			codigo = 0;
 		}
 
 		public float getSueldo() {
@@ -43,6 +47,26 @@ public class Empleado extends Persona{
 
 		public void setAFP(float aFP) {
 			AFP = aFP;
+		}
+		
+		public int getCodigo()
+		{
+			return codigo;
+		}
+		
+		public void setCodigo(int codigo)
+		{
+			this.codigo = codigo;
+		}
+		
+		public String getCargo()
+		{
+			return cargo;
+		}
+		
+		public void setCargo(String cargo)
+		{
+			this.cargo = cargo;
 		}
 		
 		public float getSuedoNeto()
