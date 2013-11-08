@@ -3,7 +3,7 @@ public class Factura {
 
 	
 		private double codigoFactura;
-		private String detalle;
+		private String comentario;
 		private float montoTotal;
 		private float codigoArticulo;
 		private String nombreArticulo;
@@ -11,7 +11,7 @@ public class Factura {
 
 		public Factura() {
 			codigoFactura = 0;
-			detalle = null;
+			comentario = null;
 			montoTotal = 0;
 			codigoArticulo = 0;
 			nombreArticulo = null;
@@ -27,12 +27,12 @@ public class Factura {
 			this.codigoFactura = codigoFactura;
 		}
 
-		public String getDetalle() {
-			return detalle;
+		public String getComentario() {
+			return comentario;
 		}
 
-		public void setDetalle(String detalle) {
-			this.detalle = detalle;
+		public void setComentario(String comentario) {
+			this.comentario = comentario;
 		}
 
 		public float getMontoTotal() {
@@ -62,7 +62,30 @@ public class Factura {
 		public double getNumeroDeComprabanteFiscal() {
 			return numeroDeComprabanteFiscal;
 		}
-
+		
+		public double devuelta(double montoRecivido)
+		{
+			return montoRecivido - montoTotal;
+		}
+		
+		public double importeDeArticulo(double cantidad, double precioArticulo)
+		{
+			return cantidad * precioArticulo;  // el valor de la variable precioArticulo tomara el valor que se le pase de la base de datos  
+		}
+		
+		public void guardar()
+		{
+			
+			conexionBD cone = new conexionBD();
+			cone.conectar();
+			
+			//cone.insertarBD();// crear esta funcion en la class conexion
+			
+			//cone.cerrar(null);
+		}
+		
+		
+		
 		public void setNumeroDeComprabanteFiscal(
 				double numeroDeComprabanteFiscal) {
 			this.numeroDeComprabanteFiscal = numeroDeComprabanteFiscal;
