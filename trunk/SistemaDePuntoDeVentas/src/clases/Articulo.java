@@ -9,10 +9,10 @@ import javax.swing.JOptionPane;
 
 public class Articulo {
  
- 			private String codigoArticulo;
+ 			private static String codigoArticulo;
  			private double costoArticulo;
  			private double precioArticulo;
- 			private String descripcionArticulo;
+ 			private static String descripcionArticulo;
  			
  			public Articulo()
  			{

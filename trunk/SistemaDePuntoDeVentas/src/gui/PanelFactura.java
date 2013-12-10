@@ -18,9 +18,12 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.border.LineBorder;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
 import java.awt.Font;
+import java.util.EventObject;
 
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
@@ -36,6 +39,10 @@ public class PanelFactura extends JPanel {
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
+	private JTextField txtsubtotal;
+	private JTextField totalitbis;
+	private JTextField txtdescuento;
+	private JTextField textField_9;
 	
 	
 
@@ -137,6 +144,76 @@ public class PanelFactura extends JPanel {
 		lblDetalles.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		//se crea la Tabla
 		 final JTable table = new JTable(datos, columnNames);
+		 table.setColumnSelectionAllowed(true);
+		 table.setCellSelectionEnabled(true);
+		 table.setModel(new DefaultTableModel(
+		 	new Object[][] {
+		 		{null, null, null, null, null, null},
+		 		{null, null, null, null, null, null},
+		 	},
+		 	new String[] {
+		 		"Codigo", "Cantidad", "Descripcion", "Precio", "ITBIS", "Valor"
+		 	}
+		 ) {
+		 	boolean[] columnEditables = new boolean[] {
+		 		true, true, false, false, false, false
+		 	};
+		 	public boolean isCellEditable(int row, int column) {
+		 		return columnEditables[column];
+		 	}
+		 });
+		 
+		 table.setCellEditor(new TableCellEditor() {
+			
+			@Override
+			public boolean stopCellEditing() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public boolean shouldSelectCell(EventObject arg0) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public void removeCellEditorListener(CellEditorListener arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public boolean isCellEditable(EventObject arg0) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+			
+			@Override
+			public Object getCellEditorValue() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+			@Override
+			public void cancelCellEditing() {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void addCellEditorListener(CellEditorListener arg0) {
+				// TODO Auto-generated method stub
+				table.setCellSelectionEnabled(true);
+			}
+			
+			@Override
+			public Component getTableCellEditorComponent(JTable table, Object value,
+					boolean isSelected, int row, int column) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+		});
 		 table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		 
 		 		JScrollPane scrollPane = new JScrollPane(table);
@@ -177,6 +254,46 @@ public class PanelFactura extends JPanel {
 		 		textField.setColumns(10);
 		 		add(lblDetalles);
 		 		add(scrollPane);
+		 		
+		 		JLabel SubTotal = new JLabel("SubTotal");
+		 		SubTotal.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		SubTotal.setBounds(785, 623, 58, 14);
+		 		add(SubTotal);
+		 		
+		 		txtsubtotal = new JTextField();
+		 		txtsubtotal.setBounds(853, 620, 86, 20);
+		 		add(txtsubtotal);
+		 		txtsubtotal.setColumns(10);
+		 		
+		 		JLabel lblNewLabel_4 = new JLabel("Total ITBIS");
+		 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		lblNewLabel_4.setBounds(774, 648, 69, 14);
+		 		add(lblNewLabel_4);
+		 		
+		 		totalitbis = new JTextField();
+		 		totalitbis.setBounds(853, 642, 86, 20);
+		 		add(totalitbis);
+		 		totalitbis.setColumns(10);
+		 		
+		 		txtdescuento = new JTextField();
+		 		txtdescuento.setBounds(853, 666, 86, 20);
+		 		add(txtdescuento);
+		 		txtdescuento.setColumns(10);
+		 		
+		 		JLabel lblDescuento = new JLabel("Descuento");
+		 		lblDescuento.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		lblDescuento.setBounds(774, 673, 69, 14);
+		 		add(lblDescuento);
+		 		
+		 		JLabel lblNewLabel_3 = new JLabel("Total Neto");
+		 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		lblNewLabel_3.setBounds(774, 698, 69, 14);
+		 		add(lblNewLabel_3);
+		 		
+		 		textField_9 = new JTextField();
+		 		textField_9.setBounds(853, 692, 86, 20);
+		 		add(textField_9);
+		 		textField_9.setColumns(10);
 
 	}
 }
