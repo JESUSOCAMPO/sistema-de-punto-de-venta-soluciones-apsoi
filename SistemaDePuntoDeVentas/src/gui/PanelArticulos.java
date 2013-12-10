@@ -24,8 +24,8 @@ import java.sql.SQLException;
 import java.awt.Color;
 
 public class PanelArticulos extends JPanel {
-	private JTextField txtCodigo;
-	private JTextField txtDescripcion;
+	private static JTextField txtCodigo;
+	private static JTextField txtDescripcion;
 	private JTextField txtCosto;
 	private JTextField txtPrecio;
 	static String codigo;
@@ -157,7 +157,7 @@ public class PanelArticulos extends JPanel {
 				
 				Articulo a = new Articulo();
 				try {
-					a.seleccionarDatos("tbarticulo", "*", "codigoArticulo='Albaro'");
+					a.seleccionarDatos("tbarticulo", "*", "codigoArticulo='096213'");
 					JOptionPane.showMessageDialog(null, "prueba");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -175,7 +175,7 @@ public class PanelArticulos extends JPanel {
 	public static void main(String[] arg) 
     {
 			
-		Articulo a = new Articulo(45367, 76.85, 99.99, "bandeja");
+		Articulo a = new Articulo(txtCodigo.getText(), 76.85, 99.99, txtDescripcion.getText());
 		a.guardarDatosBD();
     }*/
 
