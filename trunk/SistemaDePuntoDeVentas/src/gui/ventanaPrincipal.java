@@ -14,7 +14,10 @@ import java.awt.BorderLayout;
 
 //import net.miginfocom.swing.MigLayout;
 
+
 import javax.swing.JButton;
+
+import net.miginfocom.swing.MigLayout;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -76,7 +79,7 @@ public class ventanaPrincipal {
 		
 		panelIzquierdo = new JPanel();
 		frame.getContentPane().add(panelIzquierdo, BorderLayout.WEST);
-		//panelIzquierdo.setLayout(new MigLayout("", "[]", "[][][][][][][][][]"));
+	    panelIzquierdo.setLayout(new MigLayout("", "[]", "[][][][][][][][][]"));
 		
 		final PanelArticulos pa = new PanelArticulos();
 		final PanelFactura pf = new PanelFactura();
