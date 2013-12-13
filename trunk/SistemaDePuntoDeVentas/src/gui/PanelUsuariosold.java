@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Font;
-import java.awt.RenderingHints.Key;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -16,27 +15,24 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.Arrays;
 
 import javax.swing.JPasswordField;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.TextField;
-
-public class PanelUsuarios extends JPanel {
+public class PanelUsuariosold extends JPanel {
 	private JTextField txtnombre;
 	private JTextField txtdireccion;
 	private JTextField txtapellido;
 	private JTextField txtcedula;
 	private JTextField txttelefono;
 	private JTextField txtidUsuario;
+	private JPasswordField txtclave;
+	private JPasswordField txtconfirmarClave;
 
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelUsuarios() {
+	public PanelUsuariosold() {
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][][]"));
 		
 		JButton btnNuevo = new JButton("Nuevo");
@@ -113,11 +109,11 @@ public class PanelUsuarios extends JPanel {
 		cbtipoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		cbtipoUsuario.setEnabled(false);
 		add(cbtipoUsuario, "cell 1 7,growx");
-		cbtipoUsuario.insertItemAt("Administrador",0);
-		cbtipoUsuario.insertItemAt("Supervisor de Caja",1);
-		cbtipoUsuario.insertItemAt("Dijitador",2);
-		cbtipoUsuario.insertItemAt("Cajero",3);
-		cbtipoUsuario.setSelectedIndex(3);
+		cbtipoUsuario.addItem("");
+		cbtipoUsuario.addItem("Administrador");
+		cbtipoUsuario.addItem("Supervisor de Caja");
+		cbtipoUsuario.addItem("Dijitador");
+		cbtipoUsuario.addItem("Cajero");
 		
 		JButton btnAyuda = new JButton("Ayuda");
 		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -136,44 +132,29 @@ public class PanelUsuarios extends JPanel {
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblNewLabel_8, "cell 0 9,alignx trailing");
 		
-		final TextField txtclave = new TextField();
-		txtclave.setEchoChar('p');
+		txtclave = new JPasswordField();
 		txtclave.setEnabled(false);
-		add(txtclave, "cell 1 9");
+		add(txtclave, "cell 1 9,growx");
 		
 		JLabel lblNewLabel_9 = new JLabel("Confirmar Contrase\u00F1a");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblNewLabel_9, "cell 0 10,alignx trailing");
 		
-		final TextField txtconfirmarClave = new TextField();
-		txtconfirmarClave.setEchoChar('*');
+		txtconfirmarClave = new JPasswordField();
 		txtconfirmarClave.setEnabled(false);
-		add(txtconfirmarClave, "cell 1 10");
-		
+		add(txtconfirmarClave, "cell 1 10,growx");
 		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				if(txtnombre.getText()=="" || txtapellido.getText() =="" || txtcedula.getText() =="" || txtdireccion.getText() == "" || txttelefono.getText() == "")
+				if(txtclave.getPassword()!= txtconfirmarClave.getPassword())
 				{
-					JOptionPane.showMessageDialog(null,"Debe ingresar todos los datos para poder guardar");
-					return;
-				}
-				if(!validadorDeCedula(txtcedula.getText()))
-				{
-					JOptionPane.showMessageDialog(null, "La Cédula ingresada es Incorrecta, por favor vuelva a dijitarla");
-					return;
-				}				
-				/*
-				if(txtclave.getText()!= txtconfirmarClave.getText())
-				{
-					JOptionPane.showMessageDialog(null, "La contraseña no coincide, vuelva a dijitarla" + txtclave.getText() + " " + txtconfirmarClave.getText());
+					JOptionPane.showMessageDialog(null, "La contraseña no coincide, vuelva a dijitarla" + txtclave.getPassword() + " " + txtconfirmarClave.getPassword());
 					txtconfirmarClave.setText("");
 					txtconfirmarClave.requestFocus();
 					return;
-				}*/
-				
+				}
 			}
 		});
 		add(btnGuardar, "flowx,cell 1 11");
@@ -199,42 +180,5 @@ public class PanelUsuarios extends JPanel {
 		});
 		
 		}
-	
-	//////////////////////////////////////////////////
-	boolean validadorDeCedula(String ced) 
-	{
-		int suma = 0;
-		int division = 0;
-		int digito = 0;
-		int mul = 0;
-		String peso = "1212121212";
-		
-		if (ced == null || ced.length() != 11) 
-			return false;
-		
-		for(int i = 0; i < 10; i++) 
-		{
-			mul = (ced.charAt(i)-'0') * (peso.charAt(i)-'0');
-			
-			while(mul > 0) 
-			{
-				suma += mul%10;
-				mul /= 10;
-			}
-		}
-		
-		division = (suma / 10) * 10;
-		
-		if (division < suma) 
-			division += 10;
-		
-		digito = division - suma;
-		
-		if (digito != ced.charAt(10) - '0') 
-			return false;
-		
-		return true;
-	}
-	//////////////////////////////////////////////////
 
 }
