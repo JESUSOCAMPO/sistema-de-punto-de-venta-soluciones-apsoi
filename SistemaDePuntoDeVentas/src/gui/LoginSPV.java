@@ -28,7 +28,7 @@ import java.sql.ResultSet;
 
 import javax.swing.ImageIcon;
 
-import clases.BaseDeDatos;
+//import clases.BaseDeDatos;
 import clases.conexionBD;
 
 
@@ -42,7 +42,7 @@ public class LoginSPV extends JFrame
 	private JTextField txtTre;
 	private JPasswordField passwordField;
 	private Connection conexion = null;
-	private BaseDeDatos bd = null;
+	//private BaseDeDatos bd = null;
 
 	/**
 	 * Launch the application.
@@ -126,7 +126,7 @@ public class LoginSPV extends JFrame
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				boolean respuesta = false;
-				bd = new BaseDeDatos();
+				//bd = new BaseDeDatos();
 		//		String 
 				
 				

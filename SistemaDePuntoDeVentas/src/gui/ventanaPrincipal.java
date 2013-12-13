@@ -83,7 +83,7 @@ public class ventanaPrincipal {
 		
 		final PanelArticulos pa = new PanelArticulos();
 		final PanelFactura pf = new PanelFactura();
-		final PanelUsuarios pu = new PanelUsuarios();
+		//final PanelUsuarios pu = new PanelUsuarios();
 		
 		btnUsuario = new JButton("");
 		btnUsuario.addActionListener(new ActionListener() {
@@ -91,10 +91,13 @@ public class ventanaPrincipal {
 				panelMostrandose = 7;
 				if(panelMostrandose != 7 || panelMostrandose ==7)
 				{
-					pf.setVisible(false);
-					panelCentro.remove(pf);
-					pu.setVisible(true);
-					pu.show();
+					//pf.setVisible(false);
+					//panelCentro.remove(pf);
+					//pu.setVisible(true);
+					//pu.show();
+					PanelUsuarios usuario = new PanelUsuarios();
+					frame.getContentPane().add(usuario, BorderLayout.CENTER);
+					usuario.show();				
 				}
 			}
 		});
