@@ -95,6 +95,7 @@ public class ventanaPrincipal {
 					//panelCentro.remove(pf);
 					//pu.setVisible(true);
 					//pu.show();
+					panelCentro.setVisible(false);
 					PanelUsuarios usuario = new PanelUsuarios();
 					frame.getContentPane().add(usuario, BorderLayout.CENTER);
 					usuario.show();				
@@ -118,13 +119,16 @@ public class ventanaPrincipal {
 		panelIzquierdo.add(btnEmpleado, "cell 0 1");
 		
 		btnCliente = new JButton("");
-		btnCliente.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Clientes.png")));
+		btnCliente.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Clientes2.png")));
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMostrandose = 2;
 				if(panelMostrandose != 2 || panelMostrandose == 2)
 				{
-					
+					panelCentro.setVisible(false);
+					PanelClientes pc = new PanelClientes();
+					frame.getContentPane().add(pc, BorderLayout.CENTER);
+					pc.show();	
 				}
 			}
 		});
@@ -138,7 +142,7 @@ public class ventanaPrincipal {
 		btnFactura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelMostrandose = 3;
-				//PanelFactura pf = new PanelFactura();
+				PanelFactura pf = new PanelFactura();
 				if(panelMostrandose != 3 || panelMostrandose == 3)
 				{	
 					
@@ -196,9 +200,10 @@ public class ventanaPrincipal {
 				panelCentro.setVisible(false);
 				if(panelMostrandose != 4 || panelMostrandose == 4)
 				{
-				PanelArticulos articulo = new PanelArticulos();
-				frame.getContentPane().add(articulo, BorderLayout.CENTER);
-				articulo.show();
+					panelCentro.setVisible(false);
+					PanelArticulos articulo = new PanelArticulos();
+					frame.getContentPane().add(articulo, BorderLayout.CENTER);
+					articulo.show();
 				}
 				
 				

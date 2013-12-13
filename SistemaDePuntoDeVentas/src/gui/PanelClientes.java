@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Font;
-import java.awt.RenderingHints.Key;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,32 +18,28 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Arrays;
 
 import javax.swing.JPasswordField;
 
 import clases.conexionBD;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.TextField;
-
-public class PanelUsuarios extends JPanel {
+public class PanelClientes extends JPanel {
 	private JTextField txtnombre;
 	private JTextField txtdireccion;
 	private JTextField txtapellido;
 	private JTextField txtcedula;
 	private JTextField txttelefono;
-	private JTextField txtidUsuario;
+	private JTextField txtcodigoCliente;
 
 
 	/**
 	 * Create the panel.
 	 */
-	public PanelUsuarios() {
+	public PanelClientes() {
 		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][][]"));
 		
 		JButton btnNuevo = new JButton("Nuevo");
+		btnNuevo.setToolTipText("Presione para registrar un nuevo Cliente");
 		btnNuevo.setForeground(new Color(0, 128, 0));
 		btnNuevo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnNuevo, "flowx,cell 1 0");
@@ -110,108 +105,67 @@ public class PanelUsuarios extends JPanel {
 		cbsexo.addItem("F");
 		cbsexo.addItem("M");
 		
-		JLabel lblNewLabel_6 = new JLabel("Tipo de Usuario");
-		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblNewLabel_6, "cell 0 7,alignx trailing");
-		
-		final JComboBox cbtipoUsuario = new JComboBox();
-		cbtipoUsuario.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		cbtipoUsuario.setEnabled(false);
-		add(cbtipoUsuario, "cell 1 7,growx");
-		cbtipoUsuario.insertItemAt("Administrador",0);
-		cbtipoUsuario.insertItemAt("Supervisor de Caja",1);
-		cbtipoUsuario.insertItemAt("Dijitador",2);
-		cbtipoUsuario.insertItemAt("Cajero",3);
-		cbtipoUsuario.setSelectedIndex(3);
 		
 		JButton btnAyuda = new JButton("Ayuda");
 		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnAyuda, "cell 1 0");
 		
-		JLabel lblNewLabel_7 = new JLabel("ID de Usuario");
-		lblNewLabel_7.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblNewLabel_7, "cell 0 8,alignx trailing");
-		
-		txtidUsuario = new JTextField();
-		txtidUsuario.setEnabled(false);
-		add(txtidUsuario, "cell 1 8,growx");
-		txtidUsuario.setColumns(10);
-		
-		JLabel lblNewLabel_8 = new JLabel("Contrase\u00F1a");
-		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblNewLabel_8, "cell 0 9,alignx trailing");
-		
-		final TextField txtclave = new TextField();
-		txtclave.setEchoChar('*');
-		txtclave.setEnabled(false);
-		add(txtclave, "cell 1 9");
-		
-		JLabel lblNewLabel_9 = new JLabel("Confirmar Contrase\u00F1a");
-		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 12));
-		add(lblNewLabel_9, "cell 0 10,alignx trailing");
-		
-		final TextField txtconfirmarClave = new TextField();
-		txtconfirmarClave.setEchoChar('*');
-		txtconfirmarClave.setEnabled(false);
-		add(txtconfirmarClave, "cell 1 10");
-		
-		
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnGuardar.setForeground(new Color(0, 0, 128));
 		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
-				
-				if(txtnombre.getText().equals("") || txtapellido.getText().equals("") || txtcedula.getText().equals("") || txtdireccion.getText().equals("") || txttelefono.getText().equals(""))
+			public void actionPerformed(ActionEvent e) {				
+			
+				if(txtnombre.getText().equals("") || txtapellido.getText().equals("") || txtcedula.getText().equals("") || txtdireccion.getText().equals("") || txttelefono.getText().equals("") || txtcodigoCliente.getText().equals(""))
 				{
 					JOptionPane.showMessageDialog(null,"Debe ingresar todos los datos para poder guardar");
 					return;
-				}
-				if(!validadorDeCedula(txtcedula.getText()))
-				{
-					JOptionPane.showMessageDialog(null, "La Cédula ingresada es Incorrecta, por favor vuelva a dijitarla");
-					return;
-				}				
-				/*
-				if(txtclave.getText()!= txtconfirmarClave.getText())
-				{
-					JOptionPane.showMessageDialog(null, "La contraseña no coincide, vuelva a dijitarla" + txtclave.getText() + " " + txtconfirmarClave.getText());
-					txtconfirmarClave.setText("");
-					txtconfirmarClave.requestFocus();
-					return;
-				}*/
+				}		
 				try
 				{
-					
+					conexionBD conexion = new conexionBD();
 					Connection miConexion=(Connection) conexionBD.GetConnection();
 					Statement statement=(Statement) miConexion.createStatement();
-					statement.executeUpdate(" insert into tbpersona values(null,'" + txtnombre.getText() + "','" + txtapellido.getText() + "','" + txtdireccion.getText() + "','" + txtcedula.getText() + "','" + txttelefono.getText() + "','" + cbsexo.getSelectedItem() + ")'", Statement.RETURN_GENERATED_KEYS);
-					JOptionPane.showMessageDialog(null, "try");
+					statement.executeUpdate("insert into tbpersona values(null,'" + txtnombre.getText() + "','" + txtapellido.getText() + "','" + txtdireccion.getText() + "','" + txtcedula.getText() + "','" + txttelefono.getText() + "','" +  cbsexo.getSelectedItem() + "')", Statement.RETURN_GENERATED_KEYS);
 					ResultSet conjuntoResultado =statement.getGeneratedKeys();
 				    conjuntoResultado.next();
 				    int idPersona = conjuntoResultado.getInt(1);
-				    statement.executeUpdate(" insert into tbusuario values(null,'" + txtidUsuario.getText() + "'," + idPersona + ",'" + txtclave.getText() + "',0)");
+				    statement.executeUpdate(" insert into tbcliente values(null,'" + txtcodigoCliente.getText() + "'," + idPersona + ")");				
 				    JOptionPane.showMessageDialog(null, "Datos guardados");
-				}
+				} 
 				catch (Exception ex)
-				{}
+				{
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, ex);
+				}
+		
 			}
 		});
-		add(btnGuardar, "flowx,cell 1 11");
+		
+		JLabel lblNewLabel_6 = new JLabel("C\u00F3digo del Cliente");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 12));
+		add(lblNewLabel_6, "cell 0 7,alignx trailing");
+		
+		txtcodigoCliente = new JTextField();
+		txtcodigoCliente.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		txtcodigoCliente.setEnabled(false);
+		add(txtcodigoCliente, "cell 1 7,growx");
+		txtcodigoCliente.setColumns(10);
+		add(btnGuardar, "flowx,cell 1 8");
 		
 		JButton btnCerrar = new JButton("Cerrar");
-		btnCerrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ventanaPrincipal vp = new ventanaPrincipal();
-				PanelUsuarios pu = new PanelUsuarios();
-				PanelUsuarios.this.setVisible(false);
-				PanelUsuarios.this.remove(pu);
-				vp.panelCentro.setVisible(true);
-			}
-		});
 		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnCerrar.setForeground(new Color(255, 0, 0));
-		add(btnCerrar, "cell 1 11");
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				PanelClientes.this.setVisible(false);
+				ventanaPrincipal vp = new ventanaPrincipal();
+				vp.panelCentro.setVisible(true);
+				
+			}
+		});
+		add(btnCerrar, "cell 1 8");
 		
 		btnNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -220,53 +174,13 @@ public class PanelUsuarios extends JPanel {
 				txtdireccion.setEnabled(true);
 				txtcedula.setEnabled(true);
 				txttelefono.setEnabled(true);
+				txtcodigoCliente.setEnabled(true);
 				cbsexo.setEnabled(true);
-				cbtipoUsuario.setEnabled(true);
-				txtidUsuario.setEnabled(true);
-				txtclave.setEnabled(true);
-				txtconfirmarClave.setEnabled(true);
 				txtnombre.requestFocus();
 				
 			}
 		});
 		
 		}
-	
-	//////////////////////////////////////////////////
-	boolean validadorDeCedula(String ced) 
-	{
-		int suma = 0;
-		int division = 0;
-		int digito = 0;
-		int mul = 0;
-		String peso = "1212121212";
-		
-		if (ced == null || ced.length() != 11) 
-			return false;
-		
-		for(int i = 0; i < 10; i++) 
-		{
-			mul = (ced.charAt(i)-'0') * (peso.charAt(i)-'0');
-			
-			while(mul > 0) 
-			{
-				suma += mul%10;
-				mul /= 10;
-			}
-		}
-		
-		division = (suma / 10) * 10;
-		
-		if (division < suma) 
-			division += 10;
-		
-		digito = division - suma;
-		
-		if (digito != ced.charAt(10) - '0') 
-			return false;
-		
-		return true;
-	}
-	//////////////////////////////////////////////////
 
 }
