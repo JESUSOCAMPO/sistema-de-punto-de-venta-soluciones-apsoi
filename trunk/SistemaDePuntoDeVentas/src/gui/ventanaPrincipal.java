@@ -73,7 +73,7 @@ public class ventanaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 1036, 652);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		
@@ -104,7 +104,8 @@ public class ventanaPrincipal {
 		btnUsuario.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Uasuarios.png")));
 		panelIzquierdo.add(btnUsuario, "cell 0 0");
 		
-		btnEmpleado = new JButton("New button");
+		btnEmpleado = new JButton("");
+		btnEmpleado.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Empleados2.png")));
 		btnEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMostrandose = 1;
@@ -116,7 +117,8 @@ public class ventanaPrincipal {
 		});
 		panelIzquierdo.add(btnEmpleado, "cell 0 1");
 		
-		btnCliente = new JButton("New button");
+		btnCliente = new JButton("");
+		btnCliente.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Clientes.png")));
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelMostrandose = 2;
