@@ -2,12 +2,12 @@ package clases;
 
 public abstract class Persona {
 	
-		private String nombre;
-		private String apellido;
-		private String cedula;
-		private char sexo;
-		private String direccion;
-		private String telefono;
+		protected String nombre;
+		protected  String apellido;
+		protected  String cedula;
+		protected  char sexo;
+		protected  String direccion;
+		protected  String telefono;
 
 		public Persona() {
 			 nombre = null;

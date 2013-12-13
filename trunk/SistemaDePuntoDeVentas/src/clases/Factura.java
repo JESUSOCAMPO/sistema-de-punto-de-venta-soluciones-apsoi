@@ -1,5 +1,10 @@
 package clases;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class Factura {
 
 	
@@ -8,7 +13,7 @@ public class Factura {
 		private double montoTotalFactura;
 		private String codigoArticuloFactura;
 		private String nombreArticuloFactura;
-		private double numeroDeComprabanteFiscalFactura;
+		private double numeroDeComprobanteFiscalFactura;
 
 		public Factura(String codigo, String comentario, double montoTotal, String codigoArticulo, String nombreArticulo, double ncf ) {
 			codigoFactura = codigo;
@@ -16,7 +21,7 @@ public class Factura {
 			montoTotalFactura = montoTotal;
 			codigoArticuloFactura = codigoArticulo;
 			nombreArticuloFactura = nombreArticulo;
-			numeroDeComprabanteFiscalFactura = ncf;			
+			numeroDeComprobanteFiscalFactura = ncf;			
 		}
 		
 		public Factura(){
@@ -25,7 +30,7 @@ public class Factura {
 			montoTotalFactura = 0;
 			codigoArticuloFactura = null;
 			nombreArticuloFactura = null;
-			numeroDeComprabanteFiscalFactura = 0;
+			numeroDeComprobanteFiscalFactura = 0;
 		}
 
 		public String getCodigoFactura() {
@@ -68,8 +73,8 @@ public class Factura {
 			this.nombreArticuloFactura = nombreArticulo;
 		}
 
-		public double getNumeroDeComprabanteFiscal() {
-			return numeroDeComprabanteFiscalFactura;
+		public double getNumeroDeComprobanteFiscal() {
+			return numeroDeComprobanteFiscalFactura;
 		}
 		
 		public double devuelta(double montoRecivido)
@@ -93,11 +98,9 @@ public class Factura {
 			//cone.cerrar(null);
 		}
 		
-		
-		
-		public void setNumeroDeComprabanteFiscal(
-				double numeroDeComprabanteFiscal) {
-			this.numeroDeComprabanteFiscalFactura = numeroDeComprabanteFiscal;
+		public void setNumeroDeComprobanteFiscal(
+				double numeroDeComprobanteFiscal) {
+			this.numeroDeComprobanteFiscalFactura = numeroDeComprobanteFiscal;
 		}
 	}
 	
