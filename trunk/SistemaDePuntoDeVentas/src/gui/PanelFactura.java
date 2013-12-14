@@ -314,6 +314,7 @@ public class PanelFactura extends JPanel {
 		 		txtnoFactura.setColumns(10);
 		 		add(lblDetalles);
 		 		add(scrollPane);
+		 		
 
 	}
 	private static class __Tmp {

@@ -149,6 +149,7 @@ public class ventanaPrincipal {
 				panelCentro.setVisible(false);
 				frame.getContentPane().add(pf, BorderLayout.CENTER);
 				pf.show();
+				frame.pack();
 				}
 				
 				
