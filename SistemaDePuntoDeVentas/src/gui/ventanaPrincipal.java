@@ -8,11 +8,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.RootPaneContainer;
 
 import java.awt.BorderLayout;
 
 //import net.miginfocom.swing.MigLayout;
+
+
 
 
 import javax.swing.JButton;
@@ -32,7 +36,7 @@ public class ventanaPrincipal {
 
 	private JFrame frame;
 	private JPanel panelIzquierdo;
-	protected JPanel panelCentro;
+	protected JTabbedPane panelCentro;
 	private JButton btnUsuario;
 	private JButton btnEmpleado;
 	private JButton btnCliente;
@@ -87,19 +91,13 @@ public class ventanaPrincipal {
 		
 		btnUsuario = new JButton("");
 		btnUsuario.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				panelMostrandose = 7;
-				if(panelMostrandose != 7 || panelMostrandose ==7)
-				{
-					//pf.setVisible(false);
-					//panelCentro.remove(pf);
-					//pu.setVisible(true);
-					//pu.show();
-					panelCentro.setVisible(false);
-					PanelUsuarios usuario = new PanelUsuarios();
-					frame.getContentPane().add(usuario, BorderLayout.CENTER);
-					usuario.show();				
-				}
+		
+					
+				//TODO: VALIDAR QUE REALMENTE SE QUIERA SALIR DEL FORMULARIO ACTUAL
+				PanelUsuarios usuarios = new PanelUsuarios();
+					agregarPanelAlCentro(usuarios);
 			}
 		});
 		btnUsuario.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Uasuarios.png")));
@@ -122,14 +120,9 @@ public class ventanaPrincipal {
 		btnCliente.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Clientes2.png")));
 		btnCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelMostrandose = 2;
-				if(panelMostrandose != 2 || panelMostrandose == 2)
-				{
-					panelCentro.setVisible(false);
-					PanelClientes pc = new PanelClientes();
-					frame.getContentPane().add(pc, BorderLayout.CENTER);
-					pc.show();	
-				}
+			
+				PanelClientes panelClientes = new PanelClientes();				
+				agregarPanelAlCentro(panelClientes);	
 			}
 		});
 		panelIzquierdo.add(btnCliente, "cell 0 2");
@@ -141,18 +134,9 @@ public class ventanaPrincipal {
 		btnFactura = new JButton("");
 		btnFactura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				panelMostrandose = 3;
+				
 				PanelFactura pf = new PanelFactura();
-				if(panelMostrandose != 3 || panelMostrandose == 3)
-				{	
-					
-				panelCentro.setVisible(false);
-				frame.getContentPane().add(pf, BorderLayout.CENTER);
-				pf.show();
-				frame.pack();
-				}
-				
-				
+				agregarPanelAlCentro(pf);
 			}
 		});
 		btnFactura.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Factura.png")));
@@ -186,26 +170,21 @@ public class ventanaPrincipal {
 		btnInforme.setText("");
 		panelIzquierdo.add(btnInforme, "cell 0 6");
 		
-		panelCentro = new JPanel();
-		frame.getContentPane().add(panelCentro, BorderLayout.SOUTH);
+		panelCentro = new JTabbedPane(JTabbedPane.TOP);
+		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
+		
 		/*
 		panel = new JPanel();
 		panel.setBackground(Color.RED);
 		panelCentro.add(panel);*/
 		
-		panelCentro.setVisible(true);
+		//panelCentro.setVisible(true);
 		
 		btnArticulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelMostrandose = 6;
-				panelCentro.setVisible(false);
-				if(panelMostrandose != 4 || panelMostrandose == 4)
-				{
-					panelCentro.setVisible(false);
+				
 					PanelArticulos articulo = new PanelArticulos();
-					frame.getContentPane().add(articulo, BorderLayout.CENTER);
-					articulo.show();
-				}
+					agregarPanelAlCentro(articulo);
 				
 				
 				
@@ -225,6 +204,17 @@ public class ventanaPrincipal {
 		//Articulo a = new Articulo(4.90,7.60,54.00,"prueba");
 		//System.out.print(a.getDescripcionArticulo());
 		//JOptionPane.showMessageDialog(null, a.getDescripcionArticulo());
+	}
+	
+	private void agregarPanelAlCentro(JPanel panel) {
+		//panelCentro.removeAll();
+		//JScrollPane panelDeslizante = new JScrollPane(panel);
+		//panelDeslizante.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		panelCentro.setVisible(false);
+		panelCentro.addTab("Panel " + panelCentro.getTabCount(), panel);
+		System.out.println(panelCentro.getTabCount());
+		panelCentro.setVisible(true);
+		//frame.validate();
 	}
 
 	
