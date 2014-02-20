@@ -141,8 +141,8 @@ public class LoginSPV extends JFrame
 							//crear el el aceso a la bnetana prinsipal
 							
 							setVisible(false);
-							VentanaPrincipal ventana = new VentanaPrincipal();
-							ventana.mostrar();
+							//VentanaPrincipal ventana = new VentanaPrincipal();
+							//ventana.mostrar();
 							//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
 							
 							
