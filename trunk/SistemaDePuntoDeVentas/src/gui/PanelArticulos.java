@@ -52,53 +52,45 @@ public class PanelArticulos extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel.setBounds(10, 11, 430, 278);
+		panel.setBounds(10, 50, 430, 195);
 		add(panel);
-		panel.setLayout(null);
+		panel.setLayout(new MigLayout("", "[69px][49px][4px][6px][4px][266px]", "[23px][21px][21px][21px][21px][23px]"));
 		
 		JLabel lblCodigo = new JLabel("Codigo");
-		lblCodigo.setBounds(36, 79, 43, 15);
-		panel.add(lblCodigo);
+		panel.add(lblCodigo, "cell 0 1,alignx right,aligny center");
 		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		//codigo = Integer.parseInt(txtCodigo.getText());
 		
 		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
-		lblDescripcion.setBounds(10, 104, 69, 15);
-		panel.add(lblDescripcion);
+		panel.add(lblDescripcion, "cell 0 2,alignx left,aligny center");
 		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		JLabel lblCosto = new JLabel("Costo");
-		lblCosto.setBounds(43, 129, 36, 15);
-		panel.add(lblCosto);
+		panel.add(lblCosto, "cell 0 3,alignx right,aligny center");
 		lblCosto.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		JLabel lblPrecio = new JLabel("Precio");
-		lblPrecio.setBounds(42, 154, 37, 15);
-		panel.add(lblPrecio);
+		panel.add(lblPrecio, "cell 0 4,alignx right,aligny center");
 		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 12));
 		
 		btnGuardar = new Button("Guardar");
-		btnGuardar.setBounds(83, 193, 59, 23);
-		panel.add(btnGuardar);
+		panel.add(btnGuardar, "cell 1 5 3 1,alignx left,aligny top");
 		btnGuardar.setForeground(new Color(0, 0, 139));
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		btnCerrar = new Button("Cerrar");
-		btnCerrar.setBounds(146, 193, 49, 23);
-		panel.add(btnCerrar);
+		panel.add(btnCerrar, "cell 5 5,alignx left,aligny top");
 		btnCerrar.setForeground(new Color(255, 0, 0));
 		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		btnNuevo = new Button("Nuevo");
-		btnNuevo.setBounds(83, 49, 49, 23);
-		panel.add(btnNuevo);
+		panel.add(btnNuevo, "cell 1 0,alignx left,aligny top");
 		btnNuevo.setForeground(new Color(0, 128, 0));
 		btnNuevo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		btnAyuda = new Button("Ayuda");
-		btnAyuda.setBounds(136, 49, 47, 23);
-		panel.add(btnAyuda);
+		panel.add(btnAyuda, "cell 3 0 3 1,alignx left,aligny top");
 		btnAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -117,23 +109,20 @@ public class PanelArticulos extends JPanel {
 		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		txtCodigo = new JTextField();
-		txtCodigo.setBounds(83, 76, 329, 21);
-		panel.add(txtCodigo);
+		panel.add(txtCodigo, "cell 1 1 5 1,growx,aligny top");
 		txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtCodigo.setColumns(10);
 		txtCodigo.setEnabled(false);
 		
 		txtDescripcion = new JTextField();
-		txtDescripcion.setBounds(83, 101, 329, 21);
-		panel.add(txtDescripcion);
+		panel.add(txtDescripcion, "cell 1 2 5 1,growx,aligny top");
 		txtDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDescripcion.setColumns(10);
 		descripcion = txtDescripcion.getText();
 		txtDescripcion.setEnabled(false);
 		
 		txtCosto = new JTextField();
-		txtCosto.setBounds(83, 126, 329, 21);
-		panel.add(txtCosto);
+		panel.add(txtCosto, "cell 1 3 5 1,growx,aligny top");
 		txtCosto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -152,8 +141,7 @@ public class PanelArticulos extends JPanel {
 		txtCosto.setEnabled(false);
 		
 		txtPrecio = new JTextField();
-		txtPrecio.setBounds(83, 151, 329, 21);
-		panel.add(txtPrecio);
+		panel.add(txtPrecio, "cell 1 4 5 1,growx,aligny top");
 		txtPrecio.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {

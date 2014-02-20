@@ -8,14 +8,33 @@ public class Empleado extends Persona{
 		private float impuestos;
 		private float seguro;
 		private float AFP;
+        
+		///Cosntructor Empleado
+		
+		public Empleado(float SueldoEmpleado,int CodigoEmpleado, String CargoEmpleado,
+				float ImpuestoEmpleado,float SeguroPersona,float AfpEmpleado,String NombrePersona,
+				String ApellidoPersona,String CedulaPersona,char SexoPersona,
+				String DirecionPersona,String TelefonoPersona) {
+			
+			super(NombrePersona,ApellidoPersona,CedulaPersona,SexoPersona,DirecionPersona,TelefonoPersona);
+			sueldo = SueldoEmpleado;
+			impuestos = CodigoEmpleado ;
+			seguro = SeguroPersona;
+			AFP = AfpEmpleado;
+			cargo = CargoEmpleado;
+			codigo = CodigoEmpleado;
+		}
 
 		public Empleado() {
+			super();
 			sueldo = 0;
 			impuestos = 0;
 			seguro = 0;
 			AFP = 0;
 			cargo = null;
-			codigo = 0;
+			codigo = 0;	
+			
+			
 		}
 
 		public float getSueldo() {

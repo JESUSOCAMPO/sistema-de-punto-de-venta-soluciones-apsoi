@@ -8,7 +8,18 @@ public abstract class Persona {
 		protected  char sexo;
 		protected  String direccion;
 		protected  String telefono;
-
+           //Constructor de la clase Persona
+		public Persona(String NombrePersona,String ApellidoPersona,String CedulaPersona,char SexoPersona,
+				String DirecionPersona,String TelefonoPersona) {
+			 nombre = NombrePersona;
+			 apellido = ApellidoPersona;
+			 cedula = CedulaPersona;
+			 sexo = SexoPersona;
+			 direccion = DirecionPersona;
+			 telefono = TelefonoPersona;
+		}
+		//Fin del costructor Persona
+		
 		public Persona() {
 			 nombre = null;
 			 apellido = null;
@@ -17,6 +28,8 @@ public abstract class Persona {
 			 direccion = null;
 			 telefono = null;
 		}
+		
+		
 
 		public String getNombre() {
 			return nombre;

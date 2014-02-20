@@ -8,6 +8,13 @@ import java.sql.Statement;
 public class Cliente extends Persona {
 	
 	private String codigoCliente;
+		
+		public Cliente(String Codigo,String NombrePersona,String ApellidoPersona,String CedulaPersona,char SexoPersona,
+				String DirecionPersona,String TelefonoPersona)
+		{
+			super(NombrePersona,ApellidoPersona,CedulaPersona,SexoPersona,DirecionPersona,TelefonoPersona);
+			codigoCliente = Codigo;
+		}
 	
 		public Cliente()
 		{
