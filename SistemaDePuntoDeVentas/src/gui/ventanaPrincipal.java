@@ -1,9 +1,12 @@
 package gui;
 
+import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Rectangle;
 
 import clases.Articulo;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,12 +23,14 @@ import java.awt.BorderLayout;
 
 
 import javax.swing.JButton;
+import javax.swing.text.IconView;
 
 import net.miginfocom.swing.MigLayout;
 
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.Color;
 
 /**
@@ -34,9 +39,10 @@ import java.awt.Color;
  */
 public class ventanaPrincipal {
 
+	
 	private JFrame frame;
 	private JPanel panelIzquierdo;
-	protected JTabbedPane panelCentro;
+	protected JTabbedPanePersonalized panelCentro;
 	private JButton btnUsuario;
 	private JButton btnEmpleado;
 	private JButton btnCliente;
@@ -97,7 +103,7 @@ public class ventanaPrincipal {
 					
 				//TODO: VALIDAR QUE REALMENTE SE QUIERA SALIR DEL FORMULARIO ACTUAL
 				PanelUsuarios usuarios = new PanelUsuarios();
-					agregarPanelAlCentro(usuarios);
+					agregarPanelAlCentro(usuarios, null);
 			}
 		});
 		btnUsuario.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Uasuarios.png")));
@@ -122,7 +128,7 @@ public class ventanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 			
 				PanelClientes panelClientes = new PanelClientes();				
-				agregarPanelAlCentro(panelClientes);	
+				agregarPanelAlCentro(panelClientes, null);	
 			}
 		});
 		panelIzquierdo.add(btnCliente, "cell 0 2");
@@ -136,7 +142,7 @@ public class ventanaPrincipal {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				PanelFactura pf = new PanelFactura();
-				agregarPanelAlCentro(pf);
+				agregarPanelAlCentro(pf, null);
 			}
 		});
 		btnFactura.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Factura.png")));
@@ -170,7 +176,7 @@ public class ventanaPrincipal {
 		btnInforme.setText("");
 		panelIzquierdo.add(btnInforme, "cell 0 6");
 		
-		panelCentro = new JTabbedPane(JTabbedPane.TOP);
+		panelCentro = new JTabbedPanePersonalized(JTabbedPane.TOP);
 		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
 		
 		/*
@@ -184,7 +190,7 @@ public class ventanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				
 					PanelArticulos articulo = new PanelArticulos();
-					agregarPanelAlCentro(articulo);
+					agregarPanelAlCentro(articulo, null);
 				
 				
 				
@@ -206,13 +212,14 @@ public class ventanaPrincipal {
 		//JOptionPane.showMessageDialog(null, a.getDescripcionArticulo());
 	}
 	
-	private void agregarPanelAlCentro(JPanel panel) {
+	
+	private void agregarPanelAlCentro(JPanel panel, CloseTabIcon icon) {
 		//panelCentro.removeAll();
 		//JScrollPane panelDeslizante = new JScrollPane(panel);
 		//panelDeslizante.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		panelCentro.setVisible(false);
-		panelCentro.addTab("Panel " + panelCentro.getTabCount(), panel);
-		System.out.println(panelCentro.getTabCount());
+		//panelCentro.addTab("Panel " + panel.getName() + (panelCentro.getTabCount() + 1), panel);
+		panelCentro.addTab("Panel " + (panelCentro.getTabCount() + 1), panel, new CloseTabIcon(null));
 		panelCentro.setVisible(true);
 		//frame.validate();
 	}
