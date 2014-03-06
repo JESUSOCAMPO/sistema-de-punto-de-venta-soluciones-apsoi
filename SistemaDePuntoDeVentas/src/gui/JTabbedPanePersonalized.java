@@ -1,20 +1,19 @@
 package gui;
 
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
 public class JTabbedPanePersonalized extends JTabbedPane implements
-		MouseListener {
+		MouseListener, MouseMotionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	public JTabbedPanePersonalized() {
-		addMouseListener(this);
-	}
-
 	public JTabbedPanePersonalized(int tabPlacement) {
 		super(tabPlacement);
+		addMouseListener(this);	
+		addMouseMotionListener(this);
 		setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 	}
 
@@ -32,8 +31,10 @@ public class JTabbedPanePersonalized extends JTabbedPane implements
 
 	public void mouseClicked(MouseEvent e) {
 		int tabNumber = getUI().tabForCoordinate(this, e.getX(), e.getY());
-		if (tabNumber == 0)
+		if (tabNumber < 0)
 			return;
+		
+		System.out.println( ((CloseTabIcon) getIconAt(tabNumber)).getBounds() );
 		Rectangle rect = ((CloseTabIcon) getIconAt(tabNumber)).getBounds();
 		if (rect.contains(e.getX(), e.getY())) {
 			this.removeTabAt(tabNumber);
@@ -51,6 +52,36 @@ public class JTabbedPanePersonalized extends JTabbedPane implements
 
 	public void mouseReleased(MouseEvent e) {
 	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		
+		
+		int tabNumber = getUI().tabForCoordinate(this, e.getX(), e.getY());
+		
+		
+		if (tabNumber < 0)
+			return;
+		
+		CloseTabIcon icono = ((CloseTabIcon) getIconAt(tabNumber));
+		
+		Rectangle rectangulo = icono.getBounds();
+		if (rectangulo.contains(e.getX(), e.getY())) {
+			icono.establecerColor(Color.red);
+			repaint();
+		}
+		else
+		{
+			icono.establecerColor(Color.black);
+			repaint();
+		}		
+	}
 }
 
 class CloseTabIcon implements Icon {
@@ -59,21 +90,28 @@ class CloseTabIcon implements Icon {
 	private int width;
 	private int height;
 	private Icon fileIcon;
-	private Color col;
+	private Color color;
+
+	public Color obtenerColor() {
+		return color;
+	}
+
+	public void establecerColor(Color color) {
+		this.color = color;
+	}
 
 	public CloseTabIcon(Icon fileIcon) {
 		this.fileIcon = fileIcon;
 		width = 16;
 		height = 16;
+		color = Color.black;		
 	}
 
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		this.x_pos = x;
 		this.y_pos = y;
 
-		col = g.getColor();
-
-		g.setColor(Color.black);
+		g.setColor(color);
 		int y_p = y + 2;
 		// g.drawLine(x+1, y_p, x+12, y_p);
 		// g.drawLine(x+1, y_p+13, x+12, y_p+13);
@@ -85,7 +123,7 @@ class CloseTabIcon implements Icon {
 		g.drawLine(x + 10, y_p + 3, x + 3, y_p + 10);
 		g.drawLine(x + 10, y_p + 4, x + 4, y_p + 10);
 		g.drawLine(x + 9, y_p + 3, x + 3, y_p + 9);
-		g.setColor(col);
+		g.setColor(color);
 		if (fileIcon != null) {
 			fileIcon.paintIcon(c, g, x + width, y_p);
 		}
@@ -102,4 +140,6 @@ class CloseTabIcon implements Icon {
 	public Rectangle getBounds() {
 		return new Rectangle(x_pos, y_pos, width, height);
 	}
+	
+	
 }

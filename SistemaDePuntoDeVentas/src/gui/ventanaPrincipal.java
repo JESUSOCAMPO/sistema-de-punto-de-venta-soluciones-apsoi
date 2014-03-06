@@ -22,6 +22,7 @@ import java.awt.BorderLayout;
 
 
 
+
 import javax.swing.JButton;
 import javax.swing.text.IconView;
 
@@ -32,6 +33,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
+import java.awt.GridLayout;
 
 /**
  * @author Heidy Alba
@@ -41,7 +43,7 @@ public class ventanaPrincipal {
 
 	
 	private JFrame frame;
-	private JPanel panelIzquierdo;
+	private JPanel barraDeHerramientas;
 	protected JTabbedPanePersonalized panelCentro;
 	private JButton btnUsuario;
 	private JButton btnEmpleado;
@@ -87,9 +89,8 @@ public class ventanaPrincipal {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		
-		panelIzquierdo = new JPanel();
-		frame.getContentPane().add(panelIzquierdo, BorderLayout.WEST);
-	    panelIzquierdo.setLayout(new MigLayout("", "[]", "[][][][][][][][][]"));
+		barraDeHerramientas = new JPanel();
+		frame.getContentPane().add(barraDeHerramientas, BorderLayout.NORTH);
 		
 		final PanelArticulos pa = new PanelArticulos();
 		final PanelFactura pf = new PanelFactura();
@@ -103,11 +104,12 @@ public class ventanaPrincipal {
 					
 				//TODO: VALIDAR QUE REALMENTE SE QUIERA SALIR DEL FORMULARIO ACTUAL
 				PanelUsuarios usuarios = new PanelUsuarios();
-					agregarPanelAlCentro(usuarios, null);
+					agregarPanelAlCentro("Usuarios", usuarios, null);
 			}
 		});
+		barraDeHerramientas.setLayout(new GridLayout(0, 7, 0, 0));
 		btnUsuario.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Uasuarios.png")));
-		panelIzquierdo.add(btnUsuario, "cell 0 0");
+		barraDeHerramientas.add(btnUsuario);
 		
 		btnEmpleado = new JButton("");
 		btnEmpleado.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Empleados2.png")));
@@ -120,7 +122,7 @@ public class ventanaPrincipal {
 				}
 			}
 		});
-		panelIzquierdo.add(btnEmpleado, "cell 0 1");
+		barraDeHerramientas.add(btnEmpleado);
 		
 		btnCliente = new JButton("");
 		btnCliente.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Clientes2.png")));
@@ -128,25 +130,25 @@ public class ventanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 			
 				PanelClientes panelClientes = new PanelClientes();				
-				agregarPanelAlCentro(panelClientes, null);	
+				agregarPanelAlCentro("Clientes", panelClientes, null);	
 			}
 		});
-		panelIzquierdo.add(btnCliente, "cell 0 2");
+		barraDeHerramientas.add(btnCliente);
 		
 		btnArticulo = new JButton("");
 		btnArticulo.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Articulos.png")));
-		panelIzquierdo.add(btnArticulo, "cell 0 3");
+		barraDeHerramientas.add(btnArticulo);
 	
 		btnFactura = new JButton("");
 		btnFactura.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				PanelFactura pf = new PanelFactura();
-				agregarPanelAlCentro(pf, null);
+				agregarPanelAlCentro("Factura" , pf, null);
 			}
 		});
 		btnFactura.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Factura.png")));
-		panelIzquierdo.add(btnFactura, "cell 0 4");
+		barraDeHerramientas.add(btnFactura);
 		
 		btnDevolucion = new JButton("New button");
 		btnDevolucion.addActionListener(new ActionListener() {
@@ -160,7 +162,7 @@ public class ventanaPrincipal {
 		});
 		btnDevolucion.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Devolucion.png")));
 		btnDevolucion.setText("");
-		panelIzquierdo.add(btnDevolucion, "cell 0 5");
+		barraDeHerramientas.add(btnDevolucion);
 		
 		btnInforme = new JButton("New button");
 		btnInforme.addActionListener(new ActionListener() {
@@ -174,7 +176,7 @@ public class ventanaPrincipal {
 		});
 		btnInforme.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Informe.png")));
 		btnInforme.setText("");
-		panelIzquierdo.add(btnInforme, "cell 0 6");
+		barraDeHerramientas.add(btnInforme);
 		
 		panelCentro = new JTabbedPanePersonalized(JTabbedPane.TOP);
 		frame.getContentPane().add(panelCentro, BorderLayout.CENTER);
@@ -190,7 +192,7 @@ public class ventanaPrincipal {
 			public void actionPerformed(ActionEvent e) {
 				
 					PanelArticulos articulo = new PanelArticulos();
-					agregarPanelAlCentro(articulo, null);
+					agregarPanelAlCentro("Articulo", articulo, null);
 				
 				
 				
@@ -213,16 +215,9 @@ public class ventanaPrincipal {
 	}
 	
 	
-	private void agregarPanelAlCentro(JPanel panel, CloseTabIcon icon) {
-		//panelCentro.removeAll();
-		//JScrollPane panelDeslizante = new JScrollPane(panel);
-		//panelDeslizante.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		panelCentro.setVisible(false);
-		//panelCentro.addTab("Panel " + panel.getName() + (panelCentro.getTabCount() + 1), panel);
-		panelCentro.addTab("Panel " + (panelCentro.getTabCount() + 1), panel, new CloseTabIcon(null));
-		panelCentro.setVisible(true);
-		//frame.validate();
+	private void agregarPanelAlCentro(String titulo, JPanel panel, CloseTabIcon icon) {
+		panelCentro.addTab( titulo, panel);
+		panelCentro.setSelectedIndex( panelCentro.getTabCount() - 1);
 	}
-
 	
 }
