@@ -33,7 +33,8 @@ public class JTabbedPanePersonalized extends JTabbedPane implements
 		int tabNumber = getUI().tabForCoordinate(this, e.getX(), e.getY());
 		if (tabNumber < 0)
 			return;
-		
+		//JOptionPane.showMessageDialog(null, "Los datos que no se hayan guardado se perderan. Desea continuar?");
+		JOptionPane.showConfirmDialog(null, "Los datos que no se hayan guardado se perderan. Desea continuar?");
 		System.out.println( ((CloseTabIcon) getIconAt(tabNumber)).getBounds() );
 		Rectangle rect = ((CloseTabIcon) getIconAt(tabNumber)).getBounds();
 		if (rect.contains(e.getX(), e.getY())) {
