@@ -1,0 +1,240 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.1.68-community
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema dbspvapsoi
+--
+
+CREATE DATABASE IF NOT EXISTS dbspvapsoi;
+USE dbspvapsoi;
+
+--
+-- Definition of table `tbarticulo`
+--
+
+DROP TABLE IF EXISTS `tbarticulo`;
+CREATE TABLE `tbarticulo` (
+  `codigoArticulo` varchar(20) NOT NULL DEFAULT '',
+  `nombreArticulo` varchar(150) NOT NULL DEFAULT '',
+  `costoArticulo` double(10,2) NOT NULL DEFAULT '0.00',
+  `precioArticulo` double(10,2) NOT NULL DEFAULT '0.00',
+  PRIMARY KEY (`codigoArticulo`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbarticulo`
+--
+
+/*!40000 ALTER TABLE `tbarticulo` DISABLE KEYS */;
+INSERT INTO `tbarticulo` (`codigoArticulo`,`nombreArticulo`,`costoArticulo`,`precioArticulo`) VALUES 
+ ('0','null',0.00,0.00),
+ ('093','servilleta',6.00,10.00),
+ ('096213','PRUEBA',23.25,30.70),
+ ('097313','LSAKHD',23.25,30.70),
+ ('1243err','jamon',80.00,100.00),
+ ('45367','bandeja',76.85,99.99),
+ ('56tg478','palillos',6.00,10.00),
+ ('746y876','espaguetis',67.98,80.50),
+ ('746ye53','coditos',67.00,80.00),
+ ('86yr3','queso geo',110.00,130.00);
+/*!40000 ALTER TABLE `tbarticulo` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbcargousuario`
+--
+
+DROP TABLE IF EXISTS `tbcargousuario`;
+CREATE TABLE `tbcargousuario` (
+  `idCargoUsuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `cargoUsuario` varchar(45) NOT NULL DEFAULT '',
+  PRIMARY KEY (`idCargoUsuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbcargousuario`
+--
+
+/*!40000 ALTER TABLE `tbcargousuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbcargousuario` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbcliente`
+--
+
+DROP TABLE IF EXISTS `tbcliente`;
+CREATE TABLE `tbcliente` (
+  `idCliente` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `codigoCliente` varchar(10) NOT NULL DEFAULT '',
+  `idPersona` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idCliente`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbcliente`
+--
+
+/*!40000 ALTER TABLE `tbcliente` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbcliente` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbdevolucion`
+--
+
+DROP TABLE IF EXISTS `tbdevolucion`;
+CREATE TABLE `tbdevolucion` (
+  `idDevolucion` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `codigoFactura` varchar(10) NOT NULL DEFAULT '',
+  `codigoArticulo` varchar(20) NOT NULL DEFAULT '',
+  `fechaDevolucion` date NOT NULL DEFAULT '0000-00-00',
+  `tipoDevolucion` varchar(20) NOT NULL DEFAULT '',
+  PRIMARY KEY (`idDevolucion`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbdevolucion`
+--
+
+/*!40000 ALTER TABLE `tbdevolucion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbdevolucion` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbempleado`
+--
+
+DROP TABLE IF EXISTS `tbempleado`;
+CREATE TABLE `tbempleado` (
+  `idEmpleado` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idPersona` int(10) unsigned NOT NULL DEFAULT '0',
+  `sueldo` double NOT NULL DEFAULT '0',
+  `cargo` varchar(30) NOT NULL DEFAULT '',
+  PRIMARY KEY (`idEmpleado`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbempleado`
+--
+
+/*!40000 ALTER TABLE `tbempleado` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbempleado` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbfactura`
+--
+
+DROP TABLE IF EXISTS `tbfactura`;
+CREATE TABLE `tbfactura` (
+  `codigoFacura` varchar(10) NOT NULL DEFAULT '',
+  `comentario` varchar(250) NOT NULL DEFAULT '',
+  `montoTotal` double NOT NULL DEFAULT '0',
+  `NCF` varchar(19) NOT NULL DEFAULT '',
+  `fechaFactura` date NOT NULL DEFAULT '0000-00-00',
+  PRIMARY KEY (`codigoFacura`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbfactura`
+--
+
+/*!40000 ALTER TABLE `tbfactura` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbfactura` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbpermiso`
+--
+
+DROP TABLE IF EXISTS `tbpermiso`;
+CREATE TABLE `tbpermiso` (
+  `idPermiso` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `permisoDevolucion` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `permisoFactura` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `permisoUsuario` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `permisoInforme` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `permisoArticulo` smallint(5) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idPermiso`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbpermiso`
+--
+
+/*!40000 ALTER TABLE `tbpermiso` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbpermiso` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbpersona`
+--
+
+DROP TABLE IF EXISTS `tbpersona`;
+CREATE TABLE `tbpersona` (
+  `idPersona` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Nombre` varchar(30) NOT NULL DEFAULT '',
+  `Apellido` varchar(45) NOT NULL DEFAULT '',
+  `Direccion` varchar(150) NOT NULL DEFAULT '',
+  `Cedula` varchar(13) NOT NULL DEFAULT '',
+  `Telefono` varchar(12) NOT NULL DEFAULT '',
+  `Sexo` char(1) NOT NULL DEFAULT '',
+  PRIMARY KEY (`idPersona`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbpersona`
+--
+
+/*!40000 ALTER TABLE `tbpersona` DISABLE KEYS */;
+INSERT INTO `tbpersona` (`idPersona`,`Nombre`,`Apellido`,`Direccion`,`Cedula`,`Telefono`,`Sexo`) VALUES 
+ (1,'Juan ','Perez','','','',''),
+ (2,'Pablo','Jaquez','c 1 #3','09876543218','8095887678','M');
+/*!40000 ALTER TABLE `tbpersona` ENABLE KEYS */;
+
+
+--
+-- Definition of table `tbusuario`
+--
+
+DROP TABLE IF EXISTS `tbusuario`;
+CREATE TABLE `tbusuario` (
+  `idUsuario` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `idUser` varchar(30) NOT NULL DEFAULT '' COMMENT 'idUser es el nombre que el usuario usa para accesar al sistema',
+  `idPersona` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'idPersona es para vincular al usuario con la tabla persona',
+  `claveUsuario` varchar(20) NOT NULL DEFAULT '',
+  `idCargoUsuario` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idUsuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbusuario`
+--
+
+/*!40000 ALTER TABLE `tbusuario` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbusuario` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
