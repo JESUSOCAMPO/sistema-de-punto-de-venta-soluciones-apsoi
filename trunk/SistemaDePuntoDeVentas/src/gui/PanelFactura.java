@@ -44,6 +44,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class PanelFactura extends JPanel {
 	private JTextField txtnoFactura;
@@ -186,40 +188,74 @@ public class PanelFactura extends JPanel {
 		lblDetalles.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		//se crea la Tabla
 		  table = new JTable(datos, columnNames);
+		  table.addKeyListener(new KeyAdapter() {
+		  	@Override
+		  	public void keyPressed(KeyEvent arg0) {
+		  		
+	 	          
+		  	}
+		  	@Override
+		  	public void keyTyped(KeyEvent arg0) {
+		
+		  		 Connection miConexion=(Connection) conexionBD.GetConnection();
+	 			  ResultSet consulta = null;
+	 			   Statement statement = null;
+	 			  int columna1=0, columna2=0, columna3=0, columna4=0;
+	 				String id=null, descripcion=null;
+					Double costo=0.0, precio=0.0;
+		 			   boolean lleno;
+				try {
+					statement = (Statement) miConexion.createStatement();
+					 consulta = statement.executeQuery("select codigoArticulo, nombreArticulo, costoArticulo, precioArticulo from tbarticulo where codigoArticulo='" + table.getValueAt(table.getSelectedRow(), 0) +"';");
+					 
+					 columna1 = consulta.findColumn("codigoArticulo");
+					 columna2 = consulta.findColumn("nombreArticulo");
+			 		 columna3= consulta.findColumn("costoArticulo");
+			 		 columna4 = consulta.findColumn("precioArticulo");
+			 	
+			 		lleno = consulta.next();
+					 while (lleno){
+			 			    id = consulta.getString(columna1);
+			 			    descripcion = consulta.getString(columna2);
+			 			    costo = consulta.getDouble(columna3);
+			 			    precio = consulta.getDouble(columna4);
+			 			   
+			 			   lleno = consulta.next(); //se verifica si hay otro registro
+					 }
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	 			  
+	 			   //statement.execute("select " + campos + " from " + nombreTabla + " where " + condicion +";");
+
+	 			  
+	 			   //table.setValueAt(id, 0, 1);
+	 			   table.setValueAt(descripcion, table.getSelectedRow(), 2);
+	 			   table.setValueAt(precio, table.getSelectedRow(), 3);
+	 			  
+	 			  /* codigoArticulo = id;
+	 			   descripcionArticulo = descripcion;
+	 			   costoArticulo = costo;
+	 			   precioArticulo = precio;*/
+	 			  
+	 	           //JOptionPane.showMessageDialog(null, "codigo: " + id + " nombre: " + descripcion + " costo: " + costo);
+	 			  
+	 	           try {
+					statement.close();
+					 miConexion.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		  	}
+		  });
 		  table.addInputMethodListener(new InputMethodListener() {
 		  	public void caretPositionChanged(InputMethodEvent arg0) {
 		  	}
-		  	public void inputMethodTextChanged(InputMethodEvent arg0) {/*
-	 			   Connection miConexion=(Connection) conexionBD.GetConnection();
-	 			   Statement statement=(Statement) miConexion.createStatement();
-	 			   ResultSet consulta = statement.executeQuery("select nombreArticulo, costoArticulo, precioArticulo from tbarticulo where codigoArticulo='" + table.getColumnName(0) +"';");
-	 			   //statement.execute("select " + campos + " from " + nombreTabla + " where " + condicion +";");
-	 			   
-	 			   int columna1 = consulta.findColumn("codigoArticulo");
-	 			   int columna2 = consulta.findColumn("nombreArticulo");
-	 			   int columna3= consulta.findColumn("costoArticulo");
-	 			   int columna4 = consulta.findColumn("precioArticulo");
-
-	 			   boolean lleno = consulta.next();
-
-	 			   while (lleno){
-	 			   String id = consulta.getString(columna1);
-	 			   String descripcion = consulta.getString(columna2);
-	 			   Double costo = consulta.getDouble(columna3);
-	 			   Double precio = consulta.getDouble(columna4);
-	 			   
-	 			   lleno = consulta.next(); //se verifica si hay otro registro
-	 			   
-	 			   codigoArticulo = id;
-	 			   descripcionArticulo = descripcion;
-	 			   costoArticulo = costo;
-	 			   precioArticulo = precio;
+		  	public void inputMethodTextChanged(InputMethodEvent arg0) {
 	 			  
-	 	          // JOptionPane.showMessageDialog(null, "codigo: " + id + " nombre: " + descripcion + " costo: " + costo);
-	 			  }
-	 	           statement.close();
-	 	           miConexion.close();
-		  		*/
+		  		
 		  	}
 		  });
 		 table.setModel(new DefaultTableModel(
