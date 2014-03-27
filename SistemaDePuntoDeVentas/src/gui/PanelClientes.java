@@ -132,6 +132,12 @@ public class PanelClientes extends JPanel {
 				    int idPersona = conjuntoResultado.getInt(1);
 				    statement.executeUpdate(" insert into tbcliente values(null,'" + txtcodigoCliente.getText() + "'," + idPersona + ")");				
 				    JOptionPane.showMessageDialog(null, "Datos guardados");
+					txtnombre.setText("");
+					txtapellido.setText("");
+					txtdireccion.setText("");
+					txtcedula.setText("");
+					txttelefono.setText("");
+					txtcodigoCliente.setText("");
 				} 
 				catch (Exception ex)
 				{
@@ -153,15 +159,18 @@ public class PanelClientes extends JPanel {
 		txtcodigoCliente.setColumns(10);
 		add(btnGuardar, "flowx,cell 1 8");
 		
-		JButton btnCerrar = new JButton("Cerrar");
+		JButton btnCerrar = new JButton("Cancelar");
 		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnCerrar.setForeground(new Color(255, 0, 0));
 		btnCerrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				PanelClientes.this.setVisible(false);
-				ventanaPrincipal vp = new ventanaPrincipal();
-				vp.panelCentro.setVisible(true);
+				txtnombre.setText("");
+				txtapellido.setText("");
+				txtdireccion.setText("");
+				txtcedula.setText("");
+				txttelefono.setText("");
+				txtcodigoCliente.setText("");
 				
 			}
 		});
@@ -176,8 +185,7 @@ public class PanelClientes extends JPanel {
 				txttelefono.setEnabled(true);
 				txtcodigoCliente.setEnabled(true);
 				cbsexo.setEnabled(true);
-				txtnombre.requestFocus();
-				
+				txtnombre.requestFocus();				
 			}
 		});
 		
