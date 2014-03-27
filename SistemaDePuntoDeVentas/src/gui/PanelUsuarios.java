@@ -141,19 +141,19 @@ public class PanelUsuarios extends JPanel {
 		lblNewLabel_8.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblNewLabel_8, "cell 0 9,alignx trailing");
 		
-		final TextField txtclave = new TextField();
-		txtclave.setEchoChar('*');
+		final JPasswordField txtclave = new JPasswordField();
+		//txtclave.setEchoChar('*');
 		txtclave.setEnabled(false);
-		add(txtclave, "cell 1 9");
+		add(txtclave, "cell 1 9, growx");
 		
 		JLabel lblNewLabel_9 = new JLabel("Confirmar Contrase\u00F1a");
 		lblNewLabel_9.setFont(new Font("Tahoma", Font.BOLD, 12));
 		add(lblNewLabel_9, "cell 0 10,alignx trailing");
 		
-		final TextField txtconfirmarClave = new TextField();
-		txtconfirmarClave.setEchoChar('*');
+		final JPasswordField txtconfirmarClave = new JPasswordField();
+		//txtclave.setEchoChar('*');
 		txtconfirmarClave.setEnabled(false);
-		add(txtconfirmarClave, "cell 1 10");
+		add(txtconfirmarClave, "cell 1 10, growx");
 		
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -162,7 +162,7 @@ public class PanelUsuarios extends JPanel {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {			
 				
-				if(txtnombre.getText().equals("") || txtapellido.getText().equals("") || txtcedula.getText().equals("") || txtdireccion.getText().equals("") || txttelefono.getText().equals(""))
+				if(hayCamposVacios())
 				{
 					JOptionPane.showMessageDialog(null,"Debe ingresar todos los datos para poder guardar");
 					return;
@@ -172,20 +172,22 @@ public class PanelUsuarios extends JPanel {
 					JOptionPane.showMessageDialog(null, "La Cédula ingresada es Incorrecta, por favor vuelva a dijitarla");
 					return;
 				}				
-				/*
-				if(txtclave.getText()!= txtconfirmarClave.getText())
+
+				
+				if( !sonIguales( txtclave.getPassword(), txtconfirmarClave.getPassword() ) ) 
 				{
 					JOptionPane.showMessageDialog(null, "La contraseña no coincide, vuelva a dijitarla" + txtclave.getText() + " " + txtconfirmarClave.getText());
+					txtclave.setText("");
 					txtconfirmarClave.setText("");
-					txtconfirmarClave.requestFocus();
+					txtclave.requestFocusInWindow();
 					return;
-				}*/
+				}
 				try
 				{
 					
 					Connection miConexion=(Connection) conexionBD.GetConnection();
 					Statement statement=(Statement) miConexion.createStatement();
-					statement.executeUpdate(" insert into tbpersona values(null,'" + txtnombre.getText() + "','" + txtapellido.getText() + "','" + txtdireccion.getText() + "','" + txtcedula.getText() + "','" + txttelefono.getText() + "','" + cbsexo.getSelectedItem() + ")'", Statement.RETURN_GENERATED_KEYS);
+					statement.executeUpdate("insert into tbpersona values(null,'" + txtnombre.getText() + "','" + txtapellido.getText() + "','" + txtdireccion.getText() + "','" + txtcedula.getText() + "','" + txttelefono.getText() + "','" + cbsexo.getSelectedItem() + "')", Statement.RETURN_GENERATED_KEYS);
 					JOptionPane.showMessageDialog(null, "try");
 					ResultSet conjuntoResultado =statement.getGeneratedKeys();
 				    conjuntoResultado.next();
@@ -194,7 +196,9 @@ public class PanelUsuarios extends JPanel {
 				    JOptionPane.showMessageDialog(null, "Datos guardados");
 				}
 				catch (Exception ex)
-				{}
+				{
+					ex.printStackTrace();
+				}
 			}
 		});
 		add(btnGuardar, "flowx,cell 1 11");
@@ -232,6 +236,28 @@ public class PanelUsuarios extends JPanel {
 		
 		}
 	
+	protected boolean sonIguales(char[] clave, char[] confirmacion) {
+		/*boolean valorRetorno = true;
+		
+		if(clave.length == confirmacion.length)
+		{
+			for (int i = 0; i < clave.length; i++)
+			{
+				if(clave[i] != confirmacion[i])
+				{
+					valorRetorno = false;
+					break;
+				}				
+			}
+		}
+		
+		return valorRetorno;
+		*/
+		
+		return new String(clave).equals( new String(confirmacion) );
+		
+	}
+
 	//////////////////////////////////////////////////
 	boolean validadorDeCedula(String ced) 
 	{
@@ -268,5 +294,9 @@ public class PanelUsuarios extends JPanel {
 		return true;
 	}
 	//////////////////////////////////////////////////
+
+	private boolean hayCamposVacios() {
+		return txtnombre.getText().equals("") || txtapellido.getText().equals("") || txtcedula.getText().equals("") || txtdireccion.getText().equals("") || txttelefono.getText().equals("");
+	}
 
 }
