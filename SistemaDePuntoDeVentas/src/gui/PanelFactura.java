@@ -46,6 +46,7 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.ScrollPaneConstants;
 
 public class PanelFactura extends JPanel {
 	private JTextField txtnoFactura;
@@ -104,11 +105,11 @@ public class PanelFactura extends JPanel {
 		lblFecha.setText(cadenaFecha);	
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(7, 61, 932, 203);
+		panel_3.setBounds(7, 61, 932, 179);
 		panel_3.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(10, 49, 376, 84);
+		panel_1.setBounds(10, 49, 376, 90);
 		panel_1.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		//table.addColumn(null);
 		//JTable table = new 
@@ -184,7 +185,7 @@ public class PanelFactura extends JPanel {
 		txttelefonoCliente.setColumns(10);
 		
 		JLabel lblDetalles = new JLabel("Detalles");
-		lblDetalles.setBounds(7, 275, 42, 15);
+		lblDetalles.setBounds(17, 251, 42, 15);
 		lblDetalles.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		//se crea la Tabla
 		  table = new JTable(datos, columnNames);
@@ -206,7 +207,7 @@ public class PanelFactura extends JPanel {
 		 			   boolean lleno;
 				try {
 					statement = (Statement) miConexion.createStatement();
-					 consulta = statement.executeQuery("select codigoArticulo, nombreArticulo, costoArticulo, precioArticulo from tbarticulo where codigoArticulo='" + table.getValueAt(table.getSelectedRow(), 0) +"';");
+					 consulta = statement.executeQuery("select codigoArticulo, nombreArticulo, costoArticulo, precioArticulo from tbarticulo where codigoArticulo='" + table.getValueAt(table.getSelectedRow() - 1, 0) +"';");
 					 
 					 columna1 = consulta.findColumn("codigoArticulo");
 					 columna2 = consulta.findColumn("nombreArticulo");
@@ -231,8 +232,8 @@ public class PanelFactura extends JPanel {
 
 	 			  
 	 			   //table.setValueAt(id, 0, 1);
-	 			   table.setValueAt(descripcion, table.getSelectedRow(), 2);
-	 			   table.setValueAt(precio, table.getSelectedRow(), 3);
+	 			   table.setValueAt(descripcion, table.getSelectedRow() - 1, 2);
+	 			   table.setValueAt(precio, table.getSelectedRow() - 1, 3);
 	 			  
 	 			  /* codigoArticulo = id;
 	 			   descripcionArticulo = descripcion;
@@ -248,6 +249,11 @@ public class PanelFactura extends JPanel {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+	 	           
+	 	          DefaultTableModel miTableModel = (DefaultTableModel) table.getModel();
+	 	          Object nuevaFila[]= {"","",""}; 
+	 	          miTableModel.addRow(nuevaFila);
+	 	         
 		  	}
 		  });
 		  table.addInputMethodListener(new InputMethodListener() {
@@ -266,12 +272,20 @@ public class PanelFactura extends JPanel {
 		 	new String[] {
 		 		"Codigo", "Cantidad", "Descripcion", "Precio", "ITBIS", "Valor"
 		 	}
-		 ));
+		 ) {
+		 	boolean[] columnEditables = new boolean[] {
+		 		true, true, false, false, false, false
+		 	};
+		 	public boolean isCellEditable(int row, int column) {
+		 		return columnEditables[column];
+		 	}
+		 });
 		 table.setEnabled(false);
 		 table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		 
 		 		JScrollPane scrollPane = new JScrollPane(table);
-		 		scrollPane.setBounds(7, 301, 932, 203);
+		 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		 		scrollPane.setBounds(7, 277, 932, 121);
 		 		setLayout(null);
 		 		add(panel_2);
 		 		panel_2.setLayout(null);
@@ -281,11 +295,12 @@ public class PanelFactura extends JPanel {
 		 		JButton btnCerrar = new JButton("Cerrar");
 		 		btnCerrar.addActionListener(new ActionListener() {
 		 			public void actionPerformed(ActionEvent arg0) {
-		 				PanelFactura.this.setVisible(false);
+		 				/*PanelFactura.this.setVisible(false);
 		 				
 		 				ventanaPrincipal vp = new ventanaPrincipal();
-						vp.panelCentro.setVisible(true);
-						
+						vp.panelCentro.setVisible(true);*/
+		 				//table.addRowSelectionInterval(3,6);
+		 				table.add((Component) table.getModel(), 3);
 		 			}
 		 		});
 		 		btnCerrar.setForeground(Color.RED);
@@ -324,12 +339,12 @@ public class PanelFactura extends JPanel {
 		 		panel_3.add(panel_1);
 		 		
 		 		JLabel lblComentario = new JLabel("Comentario");
-		 		lblComentario.setBounds(36, 162, 62, 15);
+		 		lblComentario.setBounds(20, 148, 62, 15);
 		 		panel_3.add(lblComentario);
 		 		lblComentario.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		 		
 		 		JTextArea txtcomentario = new JTextArea();
-		 		txtcomentario.setBounds(109, 144, 813, 48);
+		 		txtcomentario.setBounds(92, 144, 814, 22);
 		 		panel_3.add(txtcomentario);
 		 		
 		 		JLabel lblCliente = new JLabel("CLIENTE:");
