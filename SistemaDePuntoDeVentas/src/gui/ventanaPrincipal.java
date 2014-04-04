@@ -63,7 +63,9 @@ public class ventanaPrincipal {
 			public void run() {
 				try {
 					ventanaPrincipal window = new ventanaPrincipal();
+					Login2 login = new Login2(window);
 					window.frame.setVisible(true);
+					login.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
