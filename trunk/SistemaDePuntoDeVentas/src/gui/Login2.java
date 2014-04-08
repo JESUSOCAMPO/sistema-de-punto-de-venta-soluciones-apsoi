@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog.ModalityType;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Frame;
@@ -36,8 +37,9 @@ import javax.swing.DropMode;
 import clases.conexionBD;
 
 import java.awt.TextArea;
+import java.awt.Dialog.ModalExclusionType;
 
-public class Login2 extends JWindow {
+public class Login2 extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtUsuario;
@@ -56,11 +58,9 @@ public class Login2 extends JWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ventanaPrincipal prueba = new ventanaPrincipal();
-					Login2 window = new Login2(prueba);
-					
-					
+					Login2 window = new Login2();
 					window.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -71,8 +71,10 @@ public class Login2 extends JWindow {
 	/**
 	 * Create the frame.
 	 */
-	public Login2(ventanaPrincipal ventanaPadre) {
+	public Login2() {
 		super();
+		setResizable(false);
+		setUndecorated(true);
 		//setResizable(false);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 270);
@@ -123,7 +125,7 @@ public class Login2 extends JWindow {
 					if(datosValidados)
 					{
 					  ventanaPrincipal ventana = new ventanaPrincipal();	
-			//TODO:		  ventana.setVisible(true);
+				  ventana.main(null);
 					  Login2.this.dispose();
 					  
 					}else{
@@ -149,11 +151,8 @@ public class Login2 extends JWindow {
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//Login2.this.dispose();
-			System.out.println(Login2.this.isFocusable());
-			Login2.this.setFocusable(true);
-			mostrarStatus();
-				
+				Login2.this.dispose();
+							
 			}
 		});
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 18));
