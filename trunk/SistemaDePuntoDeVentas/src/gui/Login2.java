@@ -73,11 +73,10 @@ public class Login2 extends JFrame {
 	 */
 	public Login2() {
 		super();
-		setResizable(false);
 		setUndecorated(true);
 		//setResizable(false);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 270);
+		setBounds(100, 100, 543, 270);
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.textHighlight);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -87,21 +86,21 @@ public class Login2 extends JFrame {
 		
 		JLabel lblUsuario = new JLabel("Usuario");
 		lblUsuario.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblUsuario.setBounds(45, 55, 75, 14);
+		lblUsuario.setBounds(216, 42, 75, 20);
 		contentPane.add(lblUsuario);
 		
 		JLabel lblClave = new JLabel("Clave");
 		lblClave.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblClave.setBounds(68, 95, 75, 14);
+		lblClave.setBounds(232, 95, 75, 14);
 		contentPane.add(lblClave);
 		
 		txtUsuario = new JTextField();
-		txtUsuario.setBounds(148, 55, 201, 20);
+		txtUsuario.setBounds(301, 45, 220, 20);
 		contentPane.add(txtUsuario);
 		txtUsuario.setColumns(10);
 		
 		txtClave = new JPasswordField();
-		txtClave.setBounds(148, 95, 201, 20);
+		txtClave.setBounds(301, 95, 220, 20);
 		contentPane.add(txtClave);
 		
 		btnEntrar = new JButton("Entrar");
@@ -144,7 +143,7 @@ public class Login2 extends JFrame {
 			}
 		});
 		btnEntrar.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnEntrar.setBounds(127, 146, 124, 45);
+		btnEntrar.setBounds(287, 146, 112, 45);
 		contentPane.add(btnEntrar);
 		
 		btnCancelar = new JButton("Cancelar");
@@ -156,8 +155,13 @@ public class Login2 extends JFrame {
 			}
 		});
 		btnCancelar.setFont(new Font("Tahoma", Font.BOLD, 18));
-		btnCancelar.setBounds(272, 146, 124, 45);
+		btnCancelar.setBounds(409, 146, 112, 45);
 		contentPane.add(btnCancelar);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(Login2.class.getResource("/Imagenes/userlogin.png")));
+		lblNewLabel.setBounds(0, 11, 266, 259);
+		contentPane.add(lblNewLabel);
 		//TODO  Agregar la etiqueta Imagen de fondo
 		/*JLabel etiquetaImagenDeFondo = new JLabel("New label");
 		etiquetaImagenDeFondo.setIcon(new ImageIcon(Login2.class.getResource("/Imagenes/key.png")));
