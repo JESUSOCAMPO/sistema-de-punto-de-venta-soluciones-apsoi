@@ -34,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.Dialog.ModalExclusionType;
 
 /**
  * @author Heidy Alba
@@ -63,9 +64,10 @@ public class ventanaPrincipal {
 			public void run() {
 				try {
 					ventanaPrincipal window = new ventanaPrincipal();
-					Login2 login = new Login2(window);
+					
 					window.frame.setVisible(true);
-					login.setVisible(true);
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
