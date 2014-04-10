@@ -29,6 +29,7 @@ import java.io.IOException;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.LineBorder;
+import javax.swing.SwingConstants;
 
 public class PanelArticulos extends JPanel {
 	private JTextField txtCodigo;
@@ -48,49 +49,29 @@ public class PanelArticulos extends JPanel {
 	 * Create the panel.
 	 */
 	public PanelArticulos() {
-		setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		panel.setBounds(10, 50, 430, 195);
-		add(panel);
-		panel.setLayout(new MigLayout("", "[69px][49px][4px][6px][4px][266px]", "[23px][21px][21px][21px][21px][23px]"));
-		
-		JLabel lblCodigo = new JLabel("Codigo");
-		panel.add(lblCodigo, "cell 0 1,alignx right,aligny center");
-		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		
-		//codigo = Integer.parseInt(txtCodigo.getText());
-		
-		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
-		panel.add(lblDescripcion, "cell 0 2,alignx left,aligny center");
-		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
-		
-		JLabel lblCosto = new JLabel("Costo");
-		panel.add(lblCosto, "cell 0 3,alignx right,aligny center");
-		lblCosto.setFont(new Font("Tahoma", Font.BOLD, 12));
-		
-		JLabel lblPrecio = new JLabel("Precio");
-		panel.add(lblPrecio, "cell 0 4,alignx right,aligny center");
-		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 12));
-		
-		btnGuardar = new Button("Guardar");
-		panel.add(btnGuardar, "cell 1 5 3 1,alignx left,aligny top");
-		btnGuardar.setForeground(new Color(0, 0, 139));
-		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		
-		btnCerrar = new Button("Cerrar");
-		panel.add(btnCerrar, "cell 5 5,alignx left,aligny top");
-		btnCerrar.setForeground(new Color(255, 0, 0));
-		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		setLayout(new MigLayout("", "[59px][][][10px][6px][][11px][29px][][][306px]", "[24px][21px][24px][21px][21px][23px][]"));
 		
 		btnNuevo = new Button("Nuevo");
-		panel.add(btnNuevo, "cell 1 0,alignx left,aligny top");
+		add(btnNuevo, "cell 8 0,alignx right,aligny top");
 		btnNuevo.setForeground(new Color(0, 128, 0));
 		btnNuevo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		//precio = Double.parseDouble(txtPrecio.getText());
+		
+		btnNuevo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				txtCodigo.setEnabled(true);
+				txtDescripcion.setEnabled(true);
+				txtCosto.setEnabled(true);
+				txtPrecio.setEnabled(true);
+				txtCodigo.requestFocus();			
+				
+			}
+		});
 		
 		btnAyuda = new Button("Ayuda");
-		panel.add(btnAyuda, "cell 3 0 3 1,alignx left,aligny top");
+		add(btnAyuda, "cell 9 0,alignx left,aligny bottom");
 		btnAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -108,21 +89,35 @@ public class PanelArticulos extends JPanel {
 		});
 		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
+		JLabel lblCodigo = new JLabel("Codigo");
+		add(lblCodigo, "cell 1 1,alignx right,aligny center");
+		lblCodigo.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
 		txtCodigo = new JTextField();
-		panel.add(txtCodigo, "cell 1 1 5 1,growx,aligny top");
+		add(txtCodigo, "cell 3 1 8 1,growx,aligny top");
 		txtCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtCodigo.setColumns(10);
 		txtCodigo.setEnabled(false);
 		
+		//codigo = Integer.parseInt(txtCodigo.getText());
+		
+		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
+		add(lblDescripcion, "cell 0 2 2 1,alignx right,aligny center");
+		lblDescripcion.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
 		txtDescripcion = new JTextField();
-		panel.add(txtDescripcion, "cell 1 2 5 1,growx,aligny top");
+		add(txtDescripcion, "cell 3 2 8 1,growx,aligny bottom");
 		txtDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtDescripcion.setColumns(10);
 		descripcion = txtDescripcion.getText();
 		txtDescripcion.setEnabled(false);
 		
+		JLabel lblCosto = new JLabel("Costo");
+		add(lblCosto, "cell 1 3,alignx right,aligny center");
+		lblCosto.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
 		txtCosto = new JTextField();
-		panel.add(txtCosto, "cell 1 3 5 1,growx,aligny top");
+		add(txtCosto, "cell 3 3 8 1,growx,aligny top");
 		txtCosto.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -140,8 +135,13 @@ public class PanelArticulos extends JPanel {
 		//costo =Double.parseDouble(txtCosto.getText());
 		txtCosto.setEnabled(false);
 		
+		JLabel lblPrecio = new JLabel("Precio");
+		lblPrecio.setVerticalAlignment(SwingConstants.BOTTOM);
+		add(lblPrecio, "cell 1 4,alignx right,aligny center");
+		lblPrecio.setFont(new Font("Tahoma", Font.BOLD, 12));
+		
 		txtPrecio = new JTextField();
-		panel.add(txtPrecio, "cell 1 4 5 1,growx,aligny top");
+		add(txtPrecio, "cell 3 4 8 1,growx,aligny top");
 		txtPrecio.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -157,44 +157,11 @@ public class PanelArticulos extends JPanel {
 		txtPrecio.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		txtPrecio.setColumns(10);
 		txtPrecio.setEnabled(false);
-		//precio = Double.parseDouble(txtPrecio.getText());
 		
-		btnNuevo.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				txtCodigo.setEnabled(true);
-				txtDescripcion.setEnabled(true);
-				txtCosto.setEnabled(true);
-				txtPrecio.setEnabled(true);
-				txtCodigo.requestFocus();			
-				
-			}
-		});
-		
-		btnCerrar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				PanelArticulos.this.setVisible(false);
-				ventanaPrincipal vp = new ventanaPrincipal();
-				vp.panelCentro.setVisible(true);
-				/*
-				Articulo a = new Articulo();
-				try {
-					a.seleccionarDatos("tbarticulo", "*", "codigoArticulo='096213'");
-					//JOptionPane.showMessageDialog(null, "prueba");
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				txtCodigo.setText(a.getCodigoArticulo());
-				//JOptionPane.showMessageDialog(null, "prueba1");
-				txtDescripcion.setText(a.getDescripcionArticulo());/*
-				txtCosto.setText(a.getCostoArticulo());
-				txtPrecio.setText(a.getPrecioArticulo());*/
-			}
-		});
+		btnGuardar = new Button("Guardar");
+		add(btnGuardar, "cell 8 5,alignx left,aligny top");
+		btnGuardar.setForeground(new Color(0, 0, 139));
+		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		
 		btnGuardar.addActionListener(new ActionListener() {
 			
@@ -232,6 +199,35 @@ public class PanelArticulos extends JPanel {
 				//Articulo a = new Articulo(codigo,costo,precio,descripcion);
 				//a.guardarDatosBD();
 				//JOptionPane.showMessageDialog(null, "no retorno");
+			}
+		});
+		
+		btnCerrar = new Button("Cerrar");
+		add(btnCerrar, "cell 9 5,alignx left,aligny top");
+		btnCerrar.setForeground(new Color(255, 0, 0));
+		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		btnCerrar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				PanelArticulos.this.setVisible(false);
+				ventanaPrincipal vp = new ventanaPrincipal();
+				vp.panelCentro.setVisible(true);
+				/*
+				Articulo a = new Articulo();
+				try {
+					a.seleccionarDatos("tbarticulo", "*", "codigoArticulo='096213'");
+					//JOptionPane.showMessageDialog(null, "prueba");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				txtCodigo.setText(a.getCodigoArticulo());
+				//JOptionPane.showMessageDialog(null, "prueba1");
+				txtDescripcion.setText(a.getDescripcionArticulo());/*
+				txtCosto.setText(a.getCostoArticulo());
+				txtPrecio.setText(a.getPrecioArticulo());*/
 			}
 		});
 	}

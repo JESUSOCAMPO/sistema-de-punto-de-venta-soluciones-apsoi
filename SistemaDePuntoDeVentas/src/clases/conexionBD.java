@@ -11,26 +11,25 @@ import javax.swing.JOptionPane;
 public class conexionBD {
 	
 	private static Connection conexion=null;
-	
 	//conectar
-		private void conectar()
-		{
-			try{
-				// cargar el Driver
-				Class.forName("com.mysql.jdbc.Driver");
-				conexion = DriverManager.getConnection("jdbc:mysql://localhost/prueba", "root", "12345");
-				//establecer la conexion
-				
-				
-			}catch(SQLException ex)
-			{
-				JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
-			}
-			catch(Exception ex)
-			{
-				JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
-			}
-		}
+				private void conectar()
+				{
+				try{
+						// cargar el Driver
+						Class.forName("com.mysql.jdbc.Driver");
+						conexion = DriverManager.getConnection("jdbc:mysql://localhost/prueba", "root", "12345");
+						//establecer la conexion
+		
+		
+					}catch(SQLException ex)
+					{
+						JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
+					}
+					catch(Exception ex)
+					{
+						JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
+					}
+				}
 	
 	   public static Connection GetConnection() 
 	     {
@@ -77,25 +76,25 @@ public class conexionBD {
 	   }
 	    
 	 //consultar
-		public ResultSet  consultar(String SQL)
-		{
-			//establecer la conexion
-			this.conectar();
-			ResultSet rs = null;
-			Statement sentencia = null;
-			try{
-				sentencia = conexion.createStatement();
-				rs = sentencia.executeQuery(SQL);
-				
-			}catch(SQLException ex)
-			{
-				JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
-			}
-			catch(Exception ex)
-			{
-				JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
-			}
-			
-			return rs;
-		}	   
+	   		 public ResultSet  consultar(String SQL)
+	   	       {
+	   			   conexionBD c = new conexionBD();	
+	   			   c.GetConnection();	
+	   			ResultSet rs = null;
+	   				Statement sentencia = null;
+	   				try{
+	   					sentencia = conexion.createStatement();
+	   					rs = sentencia.executeQuery(SQL);
+	   	
+	   				}catch(SQLException ex)
+	   				{
+	   					JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
+	   				}
+	   				catch(Exception ex)
+	   				{
+	   					JOptionPane.showMessageDialog(null, "No se logro la conexion", null, JOptionPane.ERROR_MESSAGE);
+	   				}
+	   
+	   				return rs;
+	   			}
 }
