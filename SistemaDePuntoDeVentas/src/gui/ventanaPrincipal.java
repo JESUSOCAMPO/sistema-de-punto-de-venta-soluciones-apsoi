@@ -119,11 +119,9 @@ public class ventanaPrincipal {
 		btnEmpleado.setIcon(new ImageIcon(ventanaPrincipal.class.getResource("/Imagenes/Empleados2.png")));
 		btnEmpleado.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				panelMostrandose = 1;
-				if(panelMostrandose != 1 || panelMostrandose == 1)
-				{
-					
-				}
+				
+				PanelEmpleado empleado= new PanelEmpleado();
+				agregarPanelAlCentro("Empleado", empleado, null);
 			}
 		});
 		barraDeHerramientas.add(btnEmpleado);
