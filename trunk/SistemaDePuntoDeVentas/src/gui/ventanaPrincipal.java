@@ -89,6 +89,7 @@ public class ventanaPrincipal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(ventanaPrincipal.class.getResource("/Imagenes/TituloLogin.png")));
 		frame.setBounds(100, 100, 1036, 652);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);

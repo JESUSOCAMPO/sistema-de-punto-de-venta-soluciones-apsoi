@@ -56,9 +56,10 @@ public class PanelFactura extends JPanel {
 	private JTextField txttelefonoCliente;
 	private JTextField txtnfc;
 	private JComboBox cbcondicion;
-	private JComboBox cbplazo;
+	private JTextField txtPlazo;
 	private JButton btnTraerDatos;
 	final  JTable table;
+	private JTextField txtTotal;
 	
 	
 
@@ -85,7 +86,7 @@ public class PanelFactura extends JPanel {
 				txtnombreCliente.setEnabled(true);
 				txttelefonoCliente.setEnabled(true);
 				cbcondicion.setEnabled(true);
-				cbplazo.setEnabled(true);
+				txtPlazo.setEnabled(true);
 				txtnoFactura.setEnabled(true);
 				btnTraerDatos.setEnabled(true);
 				table.setEnabled(true);
@@ -105,7 +106,7 @@ public class PanelFactura extends JPanel {
 		lblFecha.setText(cadenaFecha);	
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(7, 61, 932, 179);
+		panel_3.setBounds(17, 60, 932, 179);
 		panel_3.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		
 		JPanel panel_1 = new JPanel();
@@ -127,9 +128,9 @@ public class PanelFactura extends JPanel {
 		lblPlazo.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		panel_1.add(lblPlazo, "cell 0 1,alignx trailing");
 		
-		 cbplazo = new JComboBox();
-		cbplazo.setEnabled(false);
-		panel_1.add(cbplazo, "cell 1 1,growx");
+		 txtPlazo = new JTextField();
+		txtPlazo.setEnabled(false);
+		panel_1.add(txtPlazo, "cell 1 1,growx");
 		
 		JLabel lblNcf = new JLabel("NCF");
 		panel_1.add(lblNcf, "cell 0 2,alignx trailing");
@@ -315,6 +316,10 @@ public class PanelFactura extends JPanel {
 		 		btnTraerDatos.addActionListener(new ActionListener() {
 		 			public void actionPerformed(ActionEvent arg0) {
 		 				
+		 				VentanaParaTraerLosDatosDelCliente ventanaClientes = new VentanaParaTraerLosDatosDelCliente();
+		 				ventanaClientes.show();
+		 			
+		 				/*
 		 				Cliente cliente = new Cliente();
 		 				try
 		 				{
@@ -331,7 +336,7 @@ public class PanelFactura extends JPanel {
 		 				{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-						}
+						}*/
 		 			}
 		 		});
 		 		btnTraerDatos.setToolTipText("Ingrese el codigo del cliente y presione para completar los datos");
@@ -365,6 +370,11 @@ public class PanelFactura extends JPanel {
 		 		txtnoFactura.setColumns(10);
 		 		add(lblDetalles);
 		 		add(scrollPane);
+		 		
+		 		txtTotal = new JTextField();
+		 		txtTotal.setBounds(834, 426, 86, 20);
+		 		add(txtTotal);
+		 		txtTotal.setColumns(10);
 		 		
 
 	}
