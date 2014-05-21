@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
+import java.util.ResourceBundle.Control;
 
 import javax.swing.JPasswordField;
 
@@ -196,7 +197,6 @@ public class PanelUsuarios extends JPanel {
 		 				   cedula_usuario = consulta.getString(columna1);
 		 			   
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
@@ -207,14 +207,14 @@ public class PanelUsuarios extends JPanel {
 				}
 				if(!validadorDeCedula(txtcedula.getText()))
 				{
-					JOptionPane.showMessageDialog(null, "La Cédula ingresada es Incorrecta, por favor vuelva a dijitarla");
+					JOptionPane.showMessageDialog(null, "La Cédula ingresada es Incorrecta, por favor vuelva a digitarla");
 					return;
 				}				
 
 				
 				if( !sonIguales( txtclave.getPassword(), txtconfirmarClave.getPassword() ) ) 
 				{
-					JOptionPane.showMessageDialog(null, "La contraseña no coincide, vuelva a dijitarla" + txtclave.getText() + " " + txtconfirmarClave.getText());
+					JOptionPane.showMessageDialog(null, "La contraseña no coincide, vuelva a digitarla" + txtclave.getText() + " " + txtconfirmarClave.getText());
 					txtclave.setText("");
 					txtconfirmarClave.setText("");
 					txtclave.requestFocusInWindow();
@@ -239,6 +239,14 @@ public class PanelUsuarios extends JPanel {
 					    int idPersona = conjuntoResultado.getInt(1);
 					    statement.executeUpdate(" insert into tbusuario values(null,'" + txtidUsuario.getText() + "'," + idPersona + ",'" + txtclave.getText() + "',0)");
 					    JOptionPane.showMessageDialog(null, "Datos guardados");
+					    txtnombre.setText("");
+						txtapellido.setText("");
+						txtdireccion.setText("");
+						txtcedula.setText("");
+						txttelefono.setText("");
+						txtidUsuario.setText("");
+						txtclave.setText("");
+						txtconfirmarClave.setText("");
 					}
 					catch (Exception ex)
 					{
