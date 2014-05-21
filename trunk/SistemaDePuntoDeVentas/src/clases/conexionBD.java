@@ -17,7 +17,7 @@ public class conexionBD {
 				try{
 						// cargar el Driver
 						Class.forName("com.mysql.jdbc.Driver");
-						conexion = DriverManager.getConnection("jdbc:mysql://localhost/prueba", "root", "12345");
+						conexion = DriverManager.getConnection("jdbc:mysql://localhost/prueba", "root", "root");
 						//establecer la conexion
 		
 		
@@ -38,7 +38,7 @@ public class conexionBD {
 	             Class.forName("com.mysql.jdbc.Driver");
 	             String servidor = "jdbc:mysql://localhost/dbspvapsoi";
 	             String usuarioDB="root";
-	             String passwordDB="12345";
+	             String passwordDB="root";
 	             conexion= DriverManager.getConnection(servidor,usuarioDB,passwordDB);
 	             //JOptionPane.showMessageDialog(null,"dhdhdgdg");
 	         }

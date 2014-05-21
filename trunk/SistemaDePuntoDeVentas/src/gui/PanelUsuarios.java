@@ -18,6 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
@@ -29,6 +30,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.TextField;
 
+import javax.swing.JTextArea;
+
 public class PanelUsuarios extends JPanel {
 	private JTextField txtnombre;
 	private JTextField txtdireccion;
@@ -36,13 +39,13 @@ public class PanelUsuarios extends JPanel {
 	private JTextField txtcedula;
 	private JTextField txttelefono;
 	private JTextField txtidUsuario;
-
+	private JTextArea txtAyuda;
 
 	/**
 	 * Create the panel.
 	 */
 	public PanelUsuarios() {
-		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][][]"));
+		setLayout(new MigLayout("", "[][grow]", "[][][][][][][][][][][][][grow]"));
 		
 		JButton btnNuevo = new JButton("Nuevo");
 		btnNuevo.setForeground(new Color(0, 128, 0));
@@ -124,7 +127,22 @@ public class PanelUsuarios extends JPanel {
 		cbtipoUsuario.insertItemAt("Cajero",3);
 		cbtipoUsuario.setSelectedIndex(3);
 		
+		txtAyuda = new JTextArea();
+		txtAyuda.setText("Ayuda");
+		txtAyuda.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		txtAyuda.setEditable(false);
+		add(txtAyuda, "flowx,cell 1 12");
+		txtAyuda.setVisible(false);
+		
+		
 		JButton btnAyuda = new JButton("Ayuda");
+		btnAyuda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				txtAyuda.setText("En esta sección puede registrar los datos de los usuarios del sistema. Para esto siga los siguientes pasos: \n1.Click a nuevo \n2.Digite todos los datos solicitados por el sistema \n3.Click a guardar \nNota: Solo puede registrar nuevos usuarios, no se permite modificar los datos ya guardados.");
+				txtAyuda.setVisible(true);
+			}
+		});
 		btnAyuda.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		add(btnAyuda, "cell 1 0");
 		
@@ -160,7 +178,27 @@ public class PanelUsuarios extends JPanel {
 		btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnGuardar.setForeground(new Color(0, 0, 128));
 		btnGuardar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {	
+				String cedula_usuario="";
+				Connection miConexion;
+				Statement statement;
+				ResultSet consulta = null;
+				try {
+				
+					miConexion=(Connection) conexionBD.GetConnection();
+					statement=(Statement) miConexion.createStatement();
+					consulta = statement.executeQuery("select Cedula from tbpersona where Cedula=" + txtcedula.getText() +";");
+					int columna1 = consulta.findColumn("Cedula");
+
+		 			   boolean lleno = consulta.next();
+
+		 			   if(lleno)
+		 				   cedula_usuario = consulta.getString(columna1);
+		 			   
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				if(hayCamposVacios())
 				{
@@ -182,40 +220,35 @@ public class PanelUsuarios extends JPanel {
 					txtclave.requestFocusInWindow();
 					return;
 				}
-				try
+				
+				if(cedula_usuario.equals(txtcedula.getText()))
 				{
-					
-					Connection miConexion=(Connection) conexionBD.GetConnection();
-					Statement statement=(Statement) miConexion.createStatement();
-					statement.executeUpdate("insert into tbpersona values(null,'" + txtnombre.getText() + "','" + txtapellido.getText() + "','" + txtdireccion.getText() + "','" + txtcedula.getText() + "','" + txttelefono.getText() + "','" + cbsexo.getSelectedItem() + "')", Statement.RETURN_GENERATED_KEYS);
-					JOptionPane.showMessageDialog(null, "try");
-					ResultSet conjuntoResultado =statement.getGeneratedKeys();
-				    conjuntoResultado.next();
-				    int idPersona = conjuntoResultado.getInt(1);
-				    statement.executeUpdate(" insert into tbusuario values(null,'" + txtidUsuario.getText() + "'," + idPersona + ",'" + txtclave.getText() + "',0)");
-				    JOptionPane.showMessageDialog(null, "Datos guardados");
-				}
-				catch (Exception ex)
+					JOptionPane.showMessageDialog(null, "El usuario ya ha sido registrado. Registre un nuevo usuario");
+					return;
+				} 
+				else 
 				{
-					ex.printStackTrace();
+					try
+					{
+						
+						miConexion=(Connection) conexionBD.GetConnection();
+						statement=(Statement) miConexion.createStatement();
+						statement.executeUpdate("insert into tbpersona values(null,'" + txtnombre.getText() + "','" + txtapellido.getText() + "','" + txtdireccion.getText() + "','" + txtcedula.getText() + "','" + txttelefono.getText() + "','" + cbsexo.getSelectedItem() + "')", Statement.RETURN_GENERATED_KEYS);
+						ResultSet conjuntoResultado =statement.getGeneratedKeys();
+					    conjuntoResultado.next();
+					    int idPersona = conjuntoResultado.getInt(1);
+					    statement.executeUpdate(" insert into tbusuario values(null,'" + txtidUsuario.getText() + "'," + idPersona + ",'" + txtclave.getText() + "',0)");
+					    JOptionPane.showMessageDialog(null, "Datos guardados");
+					}
+					catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
 				}
 			}
 		});
 		add(btnGuardar, "flowx,cell 1 11");
 		
-		JButton btnCerrar = new JButton("Cerrar");
-		btnCerrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ventanaPrincipal vp = new ventanaPrincipal();
-				PanelUsuarios pu = new PanelUsuarios();
-				PanelUsuarios.this.setVisible(false);
-				PanelUsuarios.this.remove(pu);
-				vp.panelCentro.setVisible(true);
-			}
-		});
-		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCerrar.setForeground(new Color(255, 0, 0));
-		add(btnCerrar, "cell 1 11");
 		
 		btnNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -298,5 +331,6 @@ public class PanelUsuarios extends JPanel {
 	private boolean hayCamposVacios() {
 		return txtnombre.getText().equals("") || txtapellido.getText().equals("") || txtcedula.getText().equals("") || txtdireccion.getText().equals("") || txttelefono.getText().equals("");
 	}
-
+	
+	
 }
