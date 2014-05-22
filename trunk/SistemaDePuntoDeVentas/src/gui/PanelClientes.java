@@ -159,22 +159,14 @@ public class PanelClientes extends JPanel {
 		txtcodigoCliente.setColumns(10);
 		add(btnGuardar, "flowx,cell 1 8");
 		
-		JButton btnCerrar = new JButton("Cancelar");
-		btnCerrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnCerrar.setForeground(new Color(255, 0, 0));
-		btnCerrar.addActionListener(new ActionListener() {
+		JButton btnVerClientesRegistrados = new JButton("Ver Clientes Registrados");
+		btnVerClientesRegistrados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				txtnombre.setText("");
-				txtapellido.setText("");
-				txtdireccion.setText("");
-				txtcedula.setText("");
-				txttelefono.setText("");
-				txtcodigoCliente.setText("");
-				
+				VentanaParaTraerLosDatosDelCliente clientes = new VentanaParaTraerLosDatosDelCliente();
+				clientes.show();
 			}
 		});
-		add(btnCerrar, "cell 1 8");
+		add(btnVerClientesRegistrados, "cell 1 0");
 		
 		btnNuevo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

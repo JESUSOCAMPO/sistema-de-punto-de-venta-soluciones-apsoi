@@ -130,7 +130,7 @@ public class Login2 extends JFrame {
 				bd = new conexionBD();
 				String usuario = txtUsuario.getText();
 				String clave = new String(txtClave.getPassword());
-				String sql = "SELECT * FROM login WHERE usuario = '" + usuario + "' AND clave = '" + clave + "'" ;
+				String sql = "SELECT idUser, claveUsuario FROM tbusuario WHERE idUser = '" + usuario + "' AND claveUsuario = '" + clave + "'" ;
 				rs = bd.consultar(sql);
 				try{
 					while(rs.next())
