@@ -78,7 +78,7 @@ public class VentanaParaTraerLosDatosDelCliente extends JFrame {
                     			 Statement s = miConexion.createStatement();
                     			 //Ejecutamos la consulta que escribimos en la caja de texto
                     			 //y los datos lo almacenamos en un ResultSet
-                    			 ResultSet rs = s.executeQuery("select c.codigoCliente as Código,concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula from tbpersona p, tbcliente c where p.idPersona=c.idPersona");
+                    			 ResultSet rs = s.executeQuery("select c.codigoCliente as Código,concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula, p.Direccion, p.Telefono from tbpersona p, tbcliente c where p.idPersona=c.idPersona");
                     			 //Obteniendo la informacion de las columnas que estan siendo consultadas
                     			 ResultSetMetaData rsMd = rs.getMetaData();
                     			 //La cantidad de columnas que tiene la consulta
@@ -104,7 +104,7 @@ public class VentanaParaTraerLosDatosDelCliente extends JFrame {
                                 
                         }
                 });
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 setBounds(100, 100, 450, 300);
                 getContentPane().setLayout(null);
                 
@@ -116,7 +116,16 @@ public class VentanaParaTraerLosDatosDelCliente extends JFrame {
                 table.addMouseListener(new MouseAdapter() {
                 	@Override
                 	public void mouseClicked(MouseEvent arg0) {
-
+                		int fila = table.getSelectedRow();
+                		Cliente c = new Cliente(table.getValueAt(fila, 0).toString(), table.getValueAt(fila, 1).toString(), "", "", ' ',table.getValueAt(fila, 3).toString(), table.getValueAt(fila, 4).toString());
+                		
+                		PanelFactura fac = new PanelFactura();
+                		
+                		
+                		//JOptionPane.showMessageDialog(null, c.getNombre() + ","+ c.getCodigoCliente());
+                	VentanaParaTraerLosDatosDelCliente.this.dispose();
+                	
+                	
                 	}
                 });
                 table.setModel(new DefaultTableModel(
@@ -159,7 +168,7 @@ public class VentanaParaTraerLosDatosDelCliente extends JFrame {
                 			 miConexion=(Connection) conexionBD.GetConnection();
 
                 			 Statement s = miConexion.createStatement();
-                			 ResultSet rs = s.executeQuery("select c.codigoCliente as Código,concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula from tbpersona p, tbcliente c where p.idPersona=c.idPersona and "+ condicionBusqueda +" like '%"+txtBuscarCliente.getText()+"%'");
+                			 ResultSet rs = s.executeQuery("select c.codigoCliente as Código,concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula, p.Direccion, p.Telefono from tbpersona p, tbcliente c where p.idPersona=c.idPersona and "+ condicionBusqueda +" like '%"+txtBuscarCliente.getText()+"%'");
                 			 ResultSetMetaData rsMd = rs.getMetaData();
                 			 int cantidadColumnas = rsMd.getColumnCount();
                 			 for (int i = 1; i <= cantidadColumnas; i++) {
@@ -178,6 +187,7 @@ public class VentanaParaTraerLosDatosDelCliente extends JFrame {
                 			} catch (Exception ex) {
                 			 ex.printStackTrace();
                 			}
+                		
                 	}
                 });
                 btnBuscar.setBounds(298, 22, 89, 23);

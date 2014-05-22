@@ -47,6 +47,8 @@ import java.awt.event.InputMethodEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.ScrollPaneConstants;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class PanelFactura extends JPanel {
 	private JTextField txtnoFactura;
@@ -66,7 +68,15 @@ public class PanelFactura extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	
 	public PanelFactura() {
+		
+		addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent arg0) {
+				JOptionPane.showMessageDialog(null,"si");
+			}
+		});
 		/*String[] columnas = { "Codigo","Cantidad","Descripcion","Precio","ITBIS","Valor"};
 		Object[][] datos = {};*/
 		Object[][] datos = {};
@@ -316,29 +326,19 @@ public class PanelFactura extends JPanel {
 		 		btnTraerDatos.addActionListener(new ActionListener() {
 		 			public void actionPerformed(ActionEvent arg0) {
 		 				
+		 				
 		 				VentanaParaTraerLosDatosDelCliente ventanaClientes = new VentanaParaTraerLosDatosDelCliente();
 		 				ventanaClientes.show();
-		 			
-		 				/*
-		 				Cliente cliente = new Cliente();
-		 				try
-		 				{
-		 					if(!cliente.seleccionarDatos("tbpersona p, tbcliente c", "p.Nombre,p.Direccion,p.Telefono", "p.idPersona=c.idPersona and c.codigoCliente='" + txtcodigoCliente.getText() +"'"))
-		 						JOptionPane.showMessageDialog(null, "El cliente no ha sido registrado");
-		 					else
-		 					{
+		 						Cliente cliente = new Cliente();
 		 						txtnombreCliente.setText(cliente.getNombre());
 		 						txtdireccionCliente.setText(cliente.getDireccion());
 		 						txttelefonoCliente.setText(cliente.getTelefono());
-		 					}
-		 				}
-		 				catch (SQLException e) 
-		 				{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}*/
+		 					
+		 					System.out.println(cliente.getNombre() + cliente.getTelefono());
 		 			}
 		 		});
+		 		
+		 					
 		 		btnTraerDatos.setToolTipText("Ingrese el codigo del cliente y presione para completar los datos");
 		 		panel.add(btnTraerDatos, "cell 1 0");
 		 		panel_3.add(panel_1);

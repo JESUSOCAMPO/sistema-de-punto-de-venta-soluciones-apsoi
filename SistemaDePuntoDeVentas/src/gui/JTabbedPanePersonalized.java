@@ -37,6 +37,7 @@ public class JTabbedPanePersonalized extends JTabbedPane implements
 		Rectangle rect = ((CloseTabIcon) getIconAt(tabNumber)).getBounds();
 		if (rect.contains(e.getX(), e.getY()))
 		{
+			
 			int opcion = JOptionPane.showConfirmDialog(null, "Los datos que no se hayan guardado se perderan. Desea continuar?","Confirmacion", JOptionPane.OK_CANCEL_OPTION);
 			System.out.println( ((CloseTabIcon) getIconAt(tabNumber)).getBounds() );
 			if(opcion == JOptionPane.OK_OPTION)

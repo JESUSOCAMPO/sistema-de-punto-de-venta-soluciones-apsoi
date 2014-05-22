@@ -124,8 +124,8 @@ public class PanelUsuarios extends JPanel {
 		add(cbtipoUsuario, "cell 1 7,growx");
 		cbtipoUsuario.insertItemAt("Administrador",0);
 		cbtipoUsuario.insertItemAt("Supervisor de Caja",1);
-		cbtipoUsuario.insertItemAt("Dijitador",2);
-		cbtipoUsuario.insertItemAt("Cajero",3);
+		cbtipoUsuario.insertItemAt("Cajero",2);
+		cbtipoUsuario.insertItemAt("Dijitador",3);
 		cbtipoUsuario.setSelectedIndex(3);
 		
 		txtAyuda = new JTextArea();
@@ -237,7 +237,7 @@ public class PanelUsuarios extends JPanel {
 						ResultSet conjuntoResultado =statement.getGeneratedKeys();
 					    conjuntoResultado.next();
 					    int idPersona = conjuntoResultado.getInt(1);
-					    statement.executeUpdate(" insert into tbusuario values(null,'" + txtidUsuario.getText() + "'," + idPersona + ",'" + txtclave.getText() + "',0)");
+					    statement.executeUpdate(" insert into tbusuario values(null,'" + txtidUsuario.getText() + "'," + idPersona + ",'" + txtclave.getText() + "',"+ (cbtipoUsuario.getSelectedIndex()+1) +")");
 					    JOptionPane.showMessageDialog(null, "Datos guardados");
 					    txtnombre.setText("");
 						txtapellido.setText("");
@@ -256,6 +256,17 @@ public class PanelUsuarios extends JPanel {
 			}
 		});
 		add(btnGuardar, "flowx,cell 1 11");
+		
+		JButton btnVerUsuariosRegistrados = new JButton("Ver Usuarios Registrados");
+		btnVerUsuariosRegistrados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				VentanaParaTraerLosDatosDelUsuario usuarios = new VentanaParaTraerLosDatosDelUsuario();
+				usuarios.show();
+				
+			}
+		});
+		add(btnVerUsuariosRegistrados, "cell 1 0");
 		
 		
 		btnNuevo.addActionListener(new ActionListener() {
