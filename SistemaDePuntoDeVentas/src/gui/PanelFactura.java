@@ -49,6 +49,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.ScrollPaneConstants;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import javax.swing.DefaultComboBoxModel;
 
 public class PanelFactura extends JPanel {
 	private JTextField txtnoFactura;
@@ -62,7 +63,10 @@ public class PanelFactura extends JPanel {
 	private JButton btnTraerDatos;
 	final  JTable table;
 	private JTextField txtTotal;
-	
+	private JTextField txtCodigoArticulo;
+	private JTextField txtCantidad;
+	private Double subTotal;
+
 	
 
 	/**
@@ -196,7 +200,7 @@ public class PanelFactura extends JPanel {
 		txttelefonoCliente.setColumns(10);
 		
 		JLabel lblDetalles = new JLabel("Detalles");
-		lblDetalles.setBounds(17, 251, 42, 15);
+		lblDetalles.setBounds(17, 297, 42, 15);
 		lblDetalles.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		//se crea la Tabla
 		  table = new JTable(datos, columnNames);
@@ -278,7 +282,6 @@ public class PanelFactura extends JPanel {
 		 table.setModel(new DefaultTableModel(
 		 	new Object[][] {
 		 		{null, null, null, null, null, null},
-		 		{null, null, null, null, null, null},
 		 	},
 		 	new String[] {
 		 		"Codigo", "Cantidad", "Descripcion", "Precio", "ITBIS", "Valor"
@@ -296,27 +299,12 @@ public class PanelFactura extends JPanel {
 		 
 		 		JScrollPane scrollPane = new JScrollPane(table);
 		 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		 		scrollPane.setBounds(7, 277, 932, 121);
+		 		scrollPane.setBounds(7, 317, 932, 121);
 		 		setLayout(null);
 		 		add(panel_2);
 		 		panel_2.setLayout(null);
 		 		panel_2.add(btnNuevo);
 		 		panel_2.add(lblFecha);
-		 		
-		 		JButton btnCerrar = new JButton("Cerrar");
-		 		btnCerrar.addActionListener(new ActionListener() {
-		 			public void actionPerformed(ActionEvent arg0) {
-		 				/*PanelFactura.this.setVisible(false);
-		 				
-		 				ventanaPrincipal vp = new ventanaPrincipal();
-						vp.panelCentro.setVisible(true);*/
-		 				//table.addRowSelectionInterval(3,6);
-		 				table.add((Component) table.getModel(), 3);
-		 			}
-		 		});
-		 		btnCerrar.setForeground(Color.RED);
-		 		btnCerrar.setBounds(109, 11, 79, 23);
-		 		panel_2.add(btnCerrar);
 		 		add(panel_3);
 		 		panel_3.setLayout(null);
 		 		panel_3.add(panel);
@@ -372,9 +360,124 @@ public class PanelFactura extends JPanel {
 		 		add(scrollPane);
 		 		
 		 		txtTotal = new JTextField();
-		 		txtTotal.setBounds(834, 426, 86, 20);
+		 		txtTotal.setBounds(802, 448, 105, 21);
 		 		add(txtTotal);
 		 		txtTotal.setColumns(10);
+		 		
+		 		JLabel lblTotal = new JLabel("Total:");
+		 		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 17));
+		 		lblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
+		 		lblTotal.setBounds(592, 440, 200, 30);
+		 		add(lblTotal);
+		 		
+		 		txtCodigoArticulo = new JTextField();
+		 		txtCodigoArticulo.setBounds(64, 273, 105, 21);
+		 		add(txtCodigoArticulo);
+		 		txtCodigoArticulo.setColumns(10);
+		 		
+		 		JLabel lblCodigo = new JLabel("C\u00F3digo");
+		 		lblCodigo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		lblCodigo.setBounds(64, 250, 85, 17);
+		 		add(lblCodigo);
+		 		
+		 		txtCantidad = new JTextField();
+		 		txtCantidad.setText("1");
+		 		txtCantidad.setBounds(190, 273, 54, 21);
+		 		add(txtCantidad);
+		 		txtCantidad.setColumns(10);
+		 		
+		 		JLabel lblCantidad = new JLabel("Cantidad");
+		 		lblCantidad.setHorizontalAlignment(SwingConstants.LEFT);
+		 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		lblCantidad.setBounds(190, 250, 54, 19);
+		 		add(lblCantidad);
+		 		
+		 		JButton btnAgregarArticulo = new JButton("Agregar Articulo");
+		 		btnAgregarArticulo.addActionListener(new ActionListener() {
+		 			
+					public void actionPerformed(ActionEvent arg0) {
+		 				
+		 				 Connection miConexion=(Connection) conexionBD.GetConnection();
+			 			  ResultSet consulta = null;
+			 			   Statement statement = null;
+			 			  int columna1=0, columna2=0, columna3=0, columna4=0;
+			 				String id=null, descripcion=null;
+							Double costo=0.0, precio=0.0, cantidad = 0.0, valor = 0.0;
+							subTotal = 0.0;
+				 			   boolean lleno;
+						try {
+							statement = (Statement) miConexion.createStatement();
+							 consulta = statement.executeQuery("select codigoArticulo, nombreArticulo, costoArticulo, precioArticulo from tbarticulo where codigoArticulo='" + txtCodigoArticulo.getText() +"';");
+							 
+							 columna1 = consulta.findColumn("codigoArticulo");
+							 columna2 = consulta.findColumn("nombreArticulo");
+					 		 columna3= consulta.findColumn("costoArticulo");
+					 		 columna4 = consulta.findColumn("precioArticulo");
+					 	
+					 		lleno = consulta.next();
+							 while (lleno){
+					 			    id = consulta.getString(columna1);
+					 			    descripcion = consulta.getString(columna2);
+					 			    costo = consulta.getDouble(columna3);
+					 			    precio = consulta.getDouble(columna4);
+					 			   
+					 			   lleno = consulta.next(); //se verifica si hay otro registro
+							 }
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			 			  table.changeSelection(table.getSelectedRow() + 1, 0, false, false);
+			 			   //statement.execute("select " + campos + " from " + nombreTabla + " where " + condicion +";");
+			 			  cantidad = Double.parseDouble(txtCantidad.getText());
+			 			  valor = cantidad * precio;
+			 			  
+			 			   
+			 			   table.setValueAt(id, table.getSelectedRow() , 0);
+			 			  table.setValueAt(txtCantidad.getText(), table.getSelectedRow(),1);
+			 			   table.setValueAt(descripcion, table.getSelectedRow(), 2);
+			 			   table.setValueAt(precio, table.getSelectedRow(), 3);
+			 			  table.setValueAt(0.00, table.getSelectedRow(), 4);
+			 			   table.setValueAt(valor, table.getSelectedRow(), 5);
+			 			    
+			 			   subTotal += valor; 
+			 			   txtTotal.setText("" + subTotal);
+
+
+			 			   /* codigoArticulo = id;
+			 			   descripcionArticulo = descripcion;
+			 			   costoArticulo = costo;
+			 			   precioArticulo = precio;*/
+			 			  
+			 	           //JOptionPane.showMessageDialog(null, "codigo: " + id + " nombre: " + descripcion + " costo: " + costo);
+			 			  
+			 	           try {
+							statement.close();
+							 miConexion.close();
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			 	           
+			 	          DefaultTableModel miTableModel = (DefaultTableModel) table.getModel();
+			 	          Object nuevaFila[]= {"","",""}; 
+			 	          miTableModel.addRow(nuevaFila);
+		 			}
+		 		});
+		 		btnAgregarArticulo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		btnAgregarArticulo.setBounds(254, 273, 126, 21);
+		 		add(btnAgregarArticulo);
+		 		
+		 		JButton btnBuscarArticulo = new JButton("Buscar Articulo");
+		 		btnBuscarArticulo.addActionListener(new ActionListener() {
+		 			public void actionPerformed(ActionEvent arg0) {
+		 				VentanaParaTraerLosArticulosRegistrados articulo = new VentanaParaTraerLosArticulosRegistrados(); 
+		 				articulo.show();
+		 			}
+		 		});
+		 		btnBuscarArticulo.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		 		btnBuscarArticulo.setBounds(386, 273, 126, 21);
+		 		add(btnBuscarArticulo);
 		 		
 
 	}

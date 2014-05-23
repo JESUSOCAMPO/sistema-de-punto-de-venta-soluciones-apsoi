@@ -38,7 +38,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
+public class VentanaParaTraerLosEmpleadosRegistrados extends JFrame {
         private JTable table;
         private JTextField txtBuscarCliente;
         private JComboBox comboBuscarPor;
@@ -50,7 +50,7 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                 EventQueue.invokeLater(new Runnable() {
                         public void run() {
                                 try {
-                                        VentanaParaTraerLosDatosDelUsuario frame = new VentanaParaTraerLosDatosDelUsuario();
+                                        VentanaParaTraerLosEmpleadosRegistrados frame = new VentanaParaTraerLosEmpleadosRegistrados();
                                         frame.setVisible(true);
                                 } catch (Exception e) {
                                         e.printStackTrace();
@@ -62,9 +62,7 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
         /**
          * Create the frame.
          */
-        public VentanaParaTraerLosDatosDelUsuario() {
-        	setMaximumSize(new Dimension(1000, 900));
-        	setResizable(false);
+        public VentanaParaTraerLosEmpleadosRegistrados() {
                 addWindowListener(new WindowAdapter() {
                         @Override
                         public void windowOpened(WindowEvent arg0) {
@@ -80,7 +78,7 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                     			 Statement s = miConexion.createStatement();
                     			 //Ejecutamos la consulta que escribimos en la caja de texto
                     			 //y los datos lo almacenamos en un ResultSet
-                    			 ResultSet rs = s.executeQuery("select u.idUser as IdUsuario,concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula, p.Direccion, p.Telefono from tbpersona p, tbusuario u where p.idPersona=u.idPersona");
+                    			 ResultSet rs = s.executeQuery("select concat(p.Nombre,' ',p.Apellido) as Nombre,e.cargo, e.sueldo, p.Cedula, p.Direccion, p.Telefono from tbpersona p, tbempleado e where p.idPersona=e.idPersona");
                     			 //Obteniendo la informacion de las columnas que estan siendo consultadas
                     			 ResultSetMetaData rsMd = rs.getMetaData();
                     			 //La cantidad de columnas que tiene la consulta
@@ -107,11 +105,11 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                         }
                 });
                 setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                setBounds(100, 100, 800, 300);
+                setBounds(100, 100, 450, 300);
                 getContentPane().setLayout(null);
                 
                 JScrollPane scrollPane = new JScrollPane();
-                scrollPane.setBounds(0, 58, 784, 204);
+                scrollPane.setBounds(0, 58, 434, 204);
                 getContentPane().add(scrollPane);
                 
                 table = new JTable();
@@ -125,22 +123,19 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                 		
                 		
                 		//JOptionPane.showMessageDialog(null, c.getNombre() + ","+ c.getCodigoCliente());
-                	VentanaParaTraerLosDatosDelUsuario.this.dispose();
+                	VentanaParaTraerLosEmpleadosRegistrados.this.dispose();
                 	
                 	
                 	}
                 });
                 table.setModel(new DefaultTableModel(
-                	new Object[][] {
-                		{null, null, null},
-                	},
-                	new String[] {
-                		"IdUsuario", "Nombre", "Cedula"
-                	}
+                        new Object[][] {
+                                {null, null, null},
+                        },
+                        new String[] {
+                                 "Nombre", "Cedula"
+                        }
                 ));
-                table.getColumnModel().getColumn(1).setPreferredWidth(200);
-                table.getColumnModel().getColumn(1).setMinWidth(200);
-                table.getColumnModel().getColumn(1).setMaxWidth(200);
                 scrollPane.setViewportView(table);
                 
                 txtBuscarCliente = new JTextField();
@@ -155,9 +150,7 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                 		String condicionFiltro = comboBuscarPor.getSelectedItem().toString();
                 		String condicionBusqueda = "";
                 		
-                		if(condicionFiltro.equals("IdUsuario"))
-                			condicionBusqueda = "u.idUser";
-                		else
+                		
                 			if(condicionFiltro.equals("Nombre"))
                     			condicionBusqueda = "p.Nombre";
                 			else
@@ -173,7 +166,7 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                 			 miConexion=(Connection) conexionBD.GetConnection();
 
                 			 Statement s = miConexion.createStatement();
-                			 ResultSet rs = s.executeQuery("select u.idUser as IdUsuario,concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula, p.Direccion, p.Telefono from tbpersona p, tbusuario u where p.idPersona=u.idPersona and "+ condicionBusqueda +" like '%"+txtBuscarCliente.getText()+"%'");
+                			 ResultSet rs = s.executeQuery("select concat(p.Nombre,' ',p.Apellido) as Nombre,p.Cedula, e.cargo, e.sueldo, p.Direccion, p.Telefono from tbpersona p, tbempleado e where p.idPersona=e.idPersona and "+ condicionBusqueda +" like '%"+txtBuscarCliente.getText()+"%'");
                 			 ResultSetMetaData rsMd = rs.getMetaData();
                 			 int cantidadColumnas = rsMd.getColumnCount();
                 			 for (int i = 1; i <= cantidadColumnas; i++) {
@@ -199,7 +192,7 @@ public class VentanaParaTraerLosDatosDelUsuario extends JFrame {
                 getContentPane().add(btnBuscar);
                 
                 comboBuscarPor = new JComboBox();
-                comboBuscarPor.setModel(new DefaultComboBoxModel(new String[] {"IdUsuario", "Nombre", "Cedula"}));
+                comboBuscarPor.setModel(new DefaultComboBoxModel(new String[] { "Nombre", "Cedula"}));
                 comboBuscarPor.setBounds(26, 23, 73, 20);
                 getContentPane().add(comboBuscarPor);
                 

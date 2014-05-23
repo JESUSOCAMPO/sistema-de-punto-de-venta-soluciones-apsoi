@@ -178,6 +178,16 @@ setLayout(new MigLayout("", "[67px][67px,grow][][]", "[23px][][][][][][][][][][]
                 btnGuardar.setFont(new Font("Tahoma", Font.PLAIN, 12));
                 add(btnGuardar, "flowx,cell 1 10");
                 
+                JButton btnVerEmpleadosRegistrados = new JButton("Ver Empleados Registrados");
+                btnVerEmpleadosRegistrados.addActionListener(new ActionListener() {
+                	public void actionPerformed(ActionEvent e) {
+                		VentanaParaTraerLosEmpleadosRegistrados empleados = new VentanaParaTraerLosEmpleadosRegistrados();
+                		empleados.show();
+                		
+                	}
+                });
+                add(btnVerEmpleadosRegistrados, "cell 1 0");
+                
                 
                 btnGuardar.addActionListener(new ActionListener()                   
                 {
