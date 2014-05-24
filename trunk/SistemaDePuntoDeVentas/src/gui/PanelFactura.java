@@ -65,9 +65,8 @@ public class PanelFactura extends JPanel {
 	private JTextField txtTotal;
 	private JTextField txtCodigoArticulo;
 	private JTextField txtCantidad;
-	private Double subTotal;
+	private Double subTotal = 0.0;
 
-	
 
 	/**
 	 * Create the panel.
@@ -360,14 +359,16 @@ public class PanelFactura extends JPanel {
 		 		add(scrollPane);
 		 		
 		 		txtTotal = new JTextField();
-		 		txtTotal.setBounds(802, 448, 105, 21);
+		 		txtTotal.setFont(new Font("Tahoma", Font.BOLD, 24));
+		 		txtTotal.setEditable(false);
+		 		txtTotal.setBounds(745, 448, 162, 35);
 		 		add(txtTotal);
 		 		txtTotal.setColumns(10);
 		 		
 		 		JLabel lblTotal = new JLabel("Total:");
 		 		lblTotal.setFont(new Font("Tahoma", Font.BOLD, 17));
 		 		lblTotal.setHorizontalAlignment(SwingConstants.RIGHT);
-		 		lblTotal.setBounds(592, 440, 200, 30);
+		 		lblTotal.setBounds(535, 453, 200, 30);
 		 		add(lblTotal);
 		 		
 		 		txtCodigoArticulo = new JTextField();
@@ -395,6 +396,10 @@ public class PanelFactura extends JPanel {
 		 		JButton btnAgregarArticulo = new JButton("Agregar Articulo");
 		 		btnAgregarArticulo.addActionListener(new ActionListener() {
 		 			
+					
+
+					
+
 					public void actionPerformed(ActionEvent arg0) {
 		 				
 		 				 Connection miConexion=(Connection) conexionBD.GetConnection();
@@ -403,7 +408,8 @@ public class PanelFactura extends JPanel {
 			 			  int columna1=0, columna2=0, columna3=0, columna4=0;
 			 				String id=null, descripcion=null;
 							Double costo=0.0, precio=0.0, cantidad = 0.0, valor = 0.0;
-							subTotal = 0.0;
+							
+							//subTotal = 0.0;
 				 			   boolean lleno;
 						try {
 							statement = (Statement) miConexion.createStatement();
@@ -427,41 +433,35 @@ public class PanelFactura extends JPanel {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-			 			  table.changeSelection(table.getSelectedRow() + 1, 0, false, false);
+						
+							
+						table.changeSelection(table.getSelectedRow() + 1, 0, false, false);
 			 			   //statement.execute("select " + campos + " from " + nombreTabla + " where " + condicion +";");
 			 			  cantidad = Double.parseDouble(txtCantidad.getText());
 			 			  valor = cantidad * precio;
 			 			  
-			 			   
+			 			
 			 			   table.setValueAt(id, table.getSelectedRow() , 0);
-			 			  table.setValueAt(txtCantidad.getText(), table.getSelectedRow(),1);
+			 			   table.setValueAt(txtCantidad.getText(), table.getSelectedRow(),1);
 			 			   table.setValueAt(descripcion, table.getSelectedRow(), 2);
 			 			   table.setValueAt(precio, table.getSelectedRow(), 3);
-			 			  table.setValueAt(0.00, table.getSelectedRow(), 4);
+			 			   table.setValueAt(0.00, table.getSelectedRow(), 4);
 			 			   table.setValueAt(valor, table.getSelectedRow(), 5);
-			 			    
-			 			   subTotal += valor; 
-			 			   txtTotal.setText("" + subTotal);
-
-
-			 			   /* codigoArticulo = id;
-			 			   descripcionArticulo = descripcion;
-			 			   costoArticulo = costo;
-			 			   precioArticulo = precio;*/
-			 			  
-			 	           //JOptionPane.showMessageDialog(null, "codigo: " + id + " nombre: " + descripcion + " costo: " + costo);
-			 			  
-			 	           try {
-							statement.close();
-							 miConexion.close();
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-			 	           
-			 	          DefaultTableModel miTableModel = (DefaultTableModel) table.getModel();
-			 	          Object nuevaFila[]= {"","",""}; 
-			 	          miTableModel.addRow(nuevaFila);
+			 			   
+			 			  subTotal += valor;
+			 			  txtTotal.setText(subTotal.toString());
+			 			
+			 			  try {
+								statement.close();
+								 miConexion.close();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+				 	           
+				 	          DefaultTableModel miTableModel = (DefaultTableModel) table.getModel();
+				 	          Object nuevaFila[]= {"","",""}; 
+				 	          miTableModel.addRow(nuevaFila);  
 		 			}
 		 		});
 		 		btnAgregarArticulo.setFont(new Font("Tahoma", Font.PLAIN, 12));
