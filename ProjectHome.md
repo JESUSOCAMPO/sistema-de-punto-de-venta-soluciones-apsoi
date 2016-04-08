@@ -1,0 +1,7 @@
+Se necesita una aplicación que permita él: registro de los artículos en existencia para su posterior venta, ya sea con lector de código de barras o introduciéndolo manualmente.
+Registro de la devolución de los artículos vendidos y el tipo de reembolso al cliente, siempre y cuando el artículo sea devuelto antes de 90 días.
+En cuanto a la administración de las terminales existirá un usuario administrativo que tendrá la capacidad de agregar y quitar los usuarios de los cajeros. El gerente de la tienda tendrá un usuario con las mismas funciones que el usuario administrativo. Los cajeros deben autenticarse para usar la aplicación.
+Durante la venta los artículos se identifican por un código que permitirá obtener el precio del artículo, el cajero introduce el código ya sea por escáner o manualmente y si es necesario el numero de artículo que tiene el mismo código.
+Al identificar el último artículo la aplicación debe calcular y mostrar el total de la venta. Al recibir el pago en efectivo del cliente, el cajero introduce el monto recibido entonces el sistema calcula y muestra el dinero que le resta al cliente.
+Si el cliente desea devolver un articulo comprado el sistema tomara el tiempo transcurrido desde la venta; si no han pasado 30 días se reembolsara el valor en efectivo del artículo, si han pasado más de 30 pero menos de 90 se hará una nota de crédito con el valor del artículo.
+La aplicación debe permitir la creación de un informe basado en la actividad de un cajero o de un periodo de tiempo determinado.
